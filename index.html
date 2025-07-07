@@ -203,6 +203,16 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       position: relative;
       overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .parentbox:hover {
+      transform: translateY(-4px);
+      box-shadow: 
+        0 32px 64px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.12),
+        0 8px 16px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
 
     .parentbox::before {
@@ -270,51 +280,147 @@
       flex-direction: column;
       align-items: flex-end;
       justify-content: space-between;
-      min-width: 180px;
+      min-width: 200px;
       gap: 16px;
       position: relative;
       z-index: 2;
       margin-top: 1.5rem;
     }
 
+    /* IMPROVED BUTTONS */
     .see-button {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
       color: white;
       border: none;
-      padding: 16px 28px;
-      border-radius: 16px;
+      padding: 16px 32px;
+      border-radius: 20px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       box-shadow: 
-        0 8px 16px rgba(26, 26, 46, 0.3),
-        0 4px 8px rgba(26, 26, 46, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 12px 24px rgba(26, 26, 46, 0.4),
+        0 6px 12px rgba(26, 26, 46, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(0);
+      letter-spacing: 0.5px;
+      min-width: 160px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .see-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        transparent 100%);
+      transition: left 0.6s ease;
+    }
+
+    .see-button:hover::before {
+      left: 100%;
+    }
+
+    .see-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 20px 40px rgba(26, 26, 46, 0.5),
+        0 10px 20px rgba(26, 26, 46, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #1e1e32 0%, #1a2548 50%, #12161d 100%);
+    }
+
+    .see-button:active {
+      transform: translateY(0);
+      box-shadow: 
+        0 6px 12px rgba(26, 26, 46, 0.4),
+        0 3px 6px rgba(26, 26, 46, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .see-button::after {
+      content: '→';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      font-weight: 700;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .see-button:hover::after {
+      opacity: 1;
+      right: 12px;
+    }
+
+    .see-button:hover {
+      padding-right: 40px;
     }
 
     .like-count {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #1a1a2e;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-      backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+      backdrop-filter: blur(15px);
       padding: 12px 20px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
       box-shadow: 
         0 8px 16px rgba(0, 0, 0, 0.1),
         0 4px 8px rgba(0, 0, 0, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
       display: inline-flex;
       align-items: center;
       gap: 8px;
       position: relative;
       overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      user-select: none;
     }
 
     .like-count::before {
+      content: '👍';
+      font-size: 1rem;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .like-count:hover {
+      transform: translateY(-1px);
+      box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.15),
+        0 6px 12px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 100%);
+    }
+
+    .like-count:hover::before {
+      transform: scale(1.2);
+    }
+
+    .like-count:active {
+      transform: translateY(0);
+      box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .like-count::after {
       content: '';
       position: absolute;
       top: 0;
@@ -323,6 +429,12 @@
       height: 100%;
       background: linear-gradient(135deg, rgba(120, 119, 198, 0.05) 0%, transparent 100%);
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .like-count:hover::after {
+      opacity: 1;
     }
 
     @media (max-width: 768px) {
@@ -398,21 +510,27 @@
 
       .buttons {
         align-items: flex-end;
-        min-width: 120px;
+        min-width: 140px;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
         flex-shrink: 0;
       }
 
       .see-button {
-        padding: 10px 16px;
-        font-size: 0.8rem;
-        white-space: nowrap;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        min-width: 120px;
+        border-radius: 16px;
+      }
+
+      .see-button:hover {
+        padding-right: 32px;
       }
 
       .like-count {
-        font-size: 0.75rem;
-        padding: 6px 10px;
+        font-size: 0.8rem;
+        padding: 8px 12px;
+        border-radius: 16px;
       }
     }
 
@@ -480,18 +598,25 @@
       }
 
       .buttons {
-        min-width: 100px;
-        gap: 8px;
+        min-width: 110px;
+        gap: 10px;
       }
 
       .see-button {
-        padding: 8px 12px;
-        font-size: 0.75rem;
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        min-width: 100px;
+        border-radius: 14px;
+      }
+
+      .see-button:hover {
+        padding-right: 28px;
       }
 
       .like-count {
-        font-size: 0.7rem;
-        padding: 5px 8px;
+        font-size: 0.75rem;
+        padding: 6px 10px;
+        border-radius: 14px;
       }
     }
   </style>
@@ -516,12 +641,12 @@
     <div class="cards-container">
       <div class="parentbox">
         <div class="box">
-          <h3>Does caffeine before sleep reduce sleep quality?</h3>
-          <p><strong>Problem:</strong> Students drink coffee to stay awake, but it might harm their sleep.</p>
+          <h3>Does sleeping 8 hours actually improve academic performance?</h3>
+      <p><strong>Problem:</strong> Before my last exam, I stayed up all night revising, but still struggled to recall what I studied.</p>
         </div>
         <div class="buttons">
           <button class="see-button">See Experiment</button>
-          <span class="like-count">140 Need</span>
+          <span class="like-count">140 upvote</span>
         </div>
       </div>
 
@@ -532,7 +657,7 @@
         </div>
         <div class="buttons">
           <button class="see-button">See Experiment</button>
-          <span class="like-count">120 Need</span>
+          <span class="like-count">120 upvote</span>
         </div>
       </div>
 
@@ -543,7 +668,7 @@
         </div>
         <div class="buttons">
           <button class="see-button">See Experiment</button>
-          <span class="like-count">80 Need</span>
+          <span class="like-count">80 upvote</span>
         </div>
       </div>
 
@@ -554,7 +679,7 @@
         </div>
         <div class="buttons">
           <button class="see-button">See Experiment</button>
-          <span class="like-count">70 Need</span>
+          <span class="like-count">70 upvote</span>
         </div>
       </div>
     </div>
