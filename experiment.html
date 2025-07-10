@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,8 +36,7 @@
         }
 
         .active {
-            /* background-color: #c2c2c2 !important; */
-            flex: 2;
+            flex: 3; /* Increased to make highlighted area larger */
         }
 
         .inactive {
@@ -193,7 +191,7 @@
                 width: 40px;
                 height: 40px;
                 margin: 6px;
-                font-size: 10px;
+                font-size: 15px;
                 border-radius: 6px;
             }
 
@@ -205,8 +203,7 @@
         @media (hover: none) and (pointer: coarse) {
             .left:active,
             .right:active {
-                /* background-color: #b8b8b8; */
-                transition: background-color 0.1s ease;
+                transition: none;
             }
 
             button:active {
@@ -216,19 +213,16 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container" id="container">
         <div class="left inactive" onclick="setActive('left')"></div>
         <div class="right inactive" onclick="setActive('right')"></div>
         <div class="divider" id="divider"></div>
-
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Click Left or Right Area">
             <button id="actionButton"></button>
         </div>
     </div>
-
     <script>
     const divider = document.getElementById('divider');
     const actionButton = document.getElementById('actionButton');
@@ -243,16 +237,16 @@
             left.classList.remove('inactive');
             right.classList.remove('active');
             right.classList.add('inactive');
-            divider.style.left = '66.66%';
-            actionButton.textContent = '';
+            divider.style.left = '75%'; /* Adjusted for 3:1 ratio */
+            actionButton.textContent = '🌙';
             searchInput.placeholder = 'Solve the problem that keeps you up at night.';
         } else {
             right.classList.add('active');
             right.classList.remove('inactive');
             left.classList.remove('active');
             left.classList.add('inactive');
-            divider.style.left = '33.33%';
-            actionButton.textContent = '';
+            divider.style.left = '25%'; /* Adjusted for 3:1 ratio */
+            actionButton.textContent = '🤔';
             searchInput.placeholder = 'Ask a Question about Problem.';
         }
     }
@@ -265,7 +259,6 @@
         }
     });
 
-    // Handle initial click on search bar to highlight left side
     searchInput.addEventListener('click', () => {
         const left = document.querySelector('.left');
         const right = document.querySelector('.right');
@@ -273,7 +266,7 @@
         const isRightActive = right.classList.contains('active');
 
         if (!isLeftActive && !isRightActive) {
-            setActive('left'); // Highlight left side on initial search bar click
+            setActive('left');
             setTimeout(() => {
                 searchInput.focus();
             }, 100);
@@ -284,7 +277,6 @@
         }
     });
 
-    // Handle initial click on button to highlight right side
     actionButton.addEventListener('click', () => {
         const left = document.querySelector('.left');
         const right = document.querySelector('.right');
@@ -292,19 +284,17 @@
         const isRightActive = right.classList.contains('active');
 
         if (!isLeftActive && !isRightActive) {
-            setActive('right'); // Highlight right side on initial button click
+            setActive('right');
         }
     });
 
     function handleKeyboardVisibility() {
         const searchBar = document.querySelector('.search-bar');
-        
         if (window.innerWidth <= 768) {
             if (window.visualViewport) {
                 function updateSearchBarPosition() {
                     const viewport = window.visualViewport;
                     const heightDiff = window.innerHeight - viewport.height;
-                    
                     if (heightDiff > 150) {
                         searchBar.style.bottom = '15px';
                         searchBar.style.position = 'fixed';
@@ -320,15 +310,12 @@
                         searchBar.style.zIndex = '2';
                     }
                 }
-                
                 window.visualViewport.addEventListener('resize', updateSearchBarPosition);
             } else {
                 let initialHeight = window.innerHeight;
-                
                 function handleResize() {
                     const currentHeight = window.innerHeight;
                     const heightDiff = initialHeight - currentHeight;
-                    
                     if (heightDiff > 150) {
                         searchBar.style.bottom = '15px';
                         searchBar.style.position = 'fixed';
@@ -346,7 +333,6 @@
                         searchBar.style.zIndex = '2';
                     }
                 }
-                
                 window.addEventListener('resize', handleResize);
             }
         }
@@ -370,6 +356,6 @@
         }
         lastTouchEnd = now;
     }, false);
-</script>
+    </script>
 </body>
 </html>
