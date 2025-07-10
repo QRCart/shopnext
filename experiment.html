@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modi College AI</title>
+    <title>Split Page with Bottom Search</title>
     <style>
         * {
             box-sizing: border-box;
@@ -82,6 +82,10 @@
             font-style: italic;
             color: #333;
             background-color: #fafafa;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
 
         input::placeholder {
@@ -135,6 +139,9 @@
             input[type="text"] {
                 padding: 14px 18px;
                 font-size: 16px;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
             }
 
             button {
@@ -254,7 +261,50 @@
 
         if (!isLeftActive && !isRightActive) {
             alert('First click left or right area.');
+        } else {
+            // Force focus on mobile devices
+            setTimeout(() => {
+                searchInput.focus();
+            }, 100);
         }
+    });
+
+    // Handle keyboard appearance on mobile
+    function handleKeyboardShow() {
+        const searchBar = document.querySelector('.search-bar');
+        if (window.innerHeight < 500) { // Likely keyboard is open
+            searchBar.style.bottom = '10px';
+            searchBar.style.transition = 'bottom 0.3s ease';
+        }
+    }
+
+    function handleKeyboardHide() {
+        const searchBar = document.querySelector('.search-bar');
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            searchBar.style.bottom = '20px';
+        } else if (window.matchMedia('(max-width: 480px)').matches) {
+            searchBar.style.bottom = '15px';
+        } else {
+            searchBar.style.bottom = '10px';
+        }
+    }
+
+    // Listen for viewport changes (keyboard show/hide)
+    window.addEventListener('resize', () => {
+        if (document.activeElement === searchInput) {
+            handleKeyboardShow();
+        } else {
+            handleKeyboardHide();
+        }
+    });
+
+    // Handle focus events
+    searchInput.addEventListener('focus', () => {
+        setTimeout(handleKeyboardShow, 300);
+    });
+
+    searchInput.addEventListener('blur', () => {
+        setTimeout(handleKeyboardHide, 300);
     });
 
     // Prevent zoom on double-tap for mobile
