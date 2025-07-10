@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,10 +34,110 @@
             background-color: #e2e2e2;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .top-message {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+
+        .top-message.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .progress-container {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+
+        .progress-container.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(-45deg,
+                    rgba(255, 255, 255, .2) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, .2) 50%,
+                    rgba(255, 255, 255, .2) 75%,
+                    transparent 75%,
+                    transparent);
+            background-size: 30px 30px;
+            animation: progress-animation 2s linear infinite;
+        }
+
+        @keyframes progress-animation {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 30px 0;
+            }
         }
 
         .active {
-            flex: 3; /* Increased to make highlighted area larger */
+            flex: 3;
         }
 
         .inactive {
@@ -93,7 +194,6 @@
         }
 
         button {
-            display: none;
             width: 48px;
             height: 48px;
             margin: 8px;
@@ -160,6 +260,19 @@
             .divider {
                 height: calc(100% - 100px);
             }
+
+            .top-message {
+                top: 15px;
+                font-size: 14px;
+                padding: 12px 20px;
+                max-width: 350px;
+            }
+
+            .progress-container {
+                top: 65px;
+                max-width: 350px;
+                padding: 12px;
+            }
         }
 
         @media screen and (max-width: 480px) {
@@ -198,9 +311,23 @@
             .divider {
                 height: calc(100% - 60px);
             }
+
+            .top-message {
+                top: 10px;
+                font-size: 13px;
+                padding: 10px 15px;
+                max-width: 320px;
+            }
+
+            .progress-container {
+                top: 55px;
+                max-width: 320px;
+                padding: 10px;
+            }
         }
 
         @media (hover: none) and (pointer: coarse) {
+
             .left:active,
             .right:active {
                 transition: none;
@@ -208,15 +335,24 @@
 
             button:active {
                 background-color: #333;
-                transform: scale(0.95);
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container" id="container">
-        <div class="left inactive" onclick="setActive('left')"></div>
-        <div class="right inactive" onclick="setActive('right')"></div>
+        <div class="left inactive" onclick="setActive('left')">
+            <div class="top-message" id="topMessage">
+                Controlled Experiment will take : 5 hour </div>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar"> 
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+        <div class="right inactive" onclick="setActive('right')">
+        </div>
         <div class="divider" id="divider"></div>
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Click Left or Right Area">
@@ -224,138 +360,191 @@
         </div>
     </div>
     <script>
-    const divider = document.getElementById('divider');
-    const actionButton = document.getElementById('actionButton');
-    const searchInput = document.getElementById('searchInput');
+        const divider = document.getElementById('divider');
+        const actionButton = document.getElementById('actionButton');
+        const searchInput = document.getElementById('searchInput');
+        const topMessage = document.getElementById('topMessage');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
 
-    function setActive(side) {
-        const left = document.querySelector('.left');
-        const right = document.querySelector('.right');
+        let progressInterval;
+        let currentProgress = 10; // Set initial progress to 10%
+        let startTime;
 
-        if (side === 'left') {
-            left.classList.add('active');
-            left.classList.remove('inactive');
-            right.classList.remove('active');
-            right.classList.add('inactive');
-            divider.style.left = '75%'; /* Adjusted for 3:1 ratio */
-            actionButton.textContent = '🌙';
-            searchInput.placeholder = 'Solve the problem that keeps you up at night.';
-        } else {
-            right.classList.add('active');
-            right.classList.remove('inactive');
-            left.classList.remove('active');
-            left.classList.add('inactive');
-            divider.style.left = '25%'; /* Adjusted for 3:1 ratio */
-            actionButton.textContent = '🤔';
-            searchInput.placeholder = 'Ask a Question about Problem.';
-        }
-    }
+        function updateProgress() {
+            const elapsed = Date.now() - startTime;
+            const totalTime = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
+            const progress = Math.max(10, Math.min((elapsed / totalTime) * 100, 100)); // Ensure progress doesn't go below 10%
 
-    searchInput.addEventListener('input', () => {
-        if (searchInput.value.trim() !== '') {
-            actionButton.classList.add('show');
-        } else {
-            actionButton.classList.remove('show');
-        }
-    });
+            currentProgress = progress;
+            progressFill.style.width = progress + '%';
 
-    searchInput.addEventListener('click', () => {
-        const left = document.querySelector('.left');
-        const right = document.querySelector('.right');
-        const isLeftActive = left.classList.contains('active');
-        const isRightActive = right.classList.contains('active');
-
-        if (!isLeftActive && !isRightActive) {
-            setActive('left');
-            setTimeout(() => {
-                searchInput.focus();
-            }, 100);
-        } else {
-            setTimeout(() => {
-                searchInput.focus();
-            }, 100);
-        }
-    });
-
-    actionButton.addEventListener('click', () => {
-        const left = document.querySelector('.left');
-        const right = document.querySelector('.right');
-        const isLeftActive = left.classList.contains('active');
-        const isRightActive = right.classList.contains('active');
-
-        if (!isLeftActive && !isRightActive) {
-            setActive('right');
-        }
-    });
-
-    function handleKeyboardVisibility() {
-        const searchBar = document.querySelector('.search-bar');
-        if (window.innerWidth <= 768) {
-            if (window.visualViewport) {
-                function updateSearchBarPosition() {
-                    const viewport = window.visualViewport;
-                    const heightDiff = window.innerHeight - viewport.height;
-                    if (heightDiff > 150) {
-                        searchBar.style.bottom = '15px';
-                        searchBar.style.position = 'fixed';
-                        searchBar.style.transform = 'translateX(-50%)';
-                        searchBar.style.left = '50%';
-                        searchBar.style.zIndex = '9999';
-                        searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                    } else {
-                        searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
-                        searchBar.style.position = 'fixed';
-                        searchBar.style.transform = 'translateX(-50%)';
-                        searchBar.style.left = '50%';
-                        searchBar.style.zIndex = '2';
-                    }
-                }
-                window.visualViewport.addEventListener('resize', updateSearchBarPosition);
-            } else {
-                let initialHeight = window.innerHeight;
-                function handleResize() {
-                    const currentHeight = window.innerHeight;
-                    const heightDiff = initialHeight - currentHeight;
-                    if (heightDiff > 150) {
-                        searchBar.style.bottom = '15px';
-                        searchBar.style.position = 'fixed';
-                        searchBar.style.transform = 'translateX(-50%)';
-                        searchBar.style.left = '50%';
-                        searchBar.style.zIndex = '9999';
-                        setTimeout(() => {
-                            searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                        }, 100);
-                    } else {
-                        searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
-                        searchBar.style.position = 'fixed';
-                        searchBar.style.transform = 'translateX(-50%)';
-                        searchBar.style.left = '50%';
-                        searchBar.style.zIndex = '2';
-                    }
-                }
-                window.addEventListener('resize', handleResize);
+            if (progress >= 100) {
+                clearInterval(progressInterval);
             }
         }
-    }
 
-    searchInput.addEventListener('focus', () => {
-        if (window.innerWidth <= 768) {
-            setTimeout(() => {
-                searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
+        function startProgress() {
+            startTime = Date.now();
+            currentProgress = 10; // Set initial progress to 10%
+            progressFill.style.width = '10%'; // Set initial width
+            topMessage.classList.add('show');
+            progressContainer.classList.add('show');
+
+            // Update every second
+            progressInterval = setInterval(updateProgress, 1000);
+            updateProgress(); // Initial update
         }
-    });
 
-    handleKeyboardVisibility();
-
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function (event) {
-        const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
+        function stopProgress() {
+            clearInterval(progressInterval);
+            topMessage.classList.remove('show');
+            progressContainer.classList.remove('show');
         }
-        lastTouchEnd = now;
-    }, false);
+
+        function setActive(side) {
+            const left = document.querySelector('.left');
+            const right = document.querySelector('.right');
+
+            if (side === 'left') {
+                left.classList.add('active');
+                left.classList.remove('inactive');
+                right.classList.remove('active');
+                right.classList.add('inactive');
+                divider.style.left = '75%';
+                actionButton.textContent = '🌙';
+                searchInput.placeholder = 'Solve the problem that keeps you up at night.';
+            } else {
+                right.classList.add('active');
+                right.classList.remove('inactive');
+                left.classList.remove('active');
+                left.classList.add('inactive');
+                divider.style.left = '25%';
+                actionButton.textContent = '🤔';
+                searchInput.placeholder = 'Ask a Question about Problem.';
+            }
+        }
+
+        searchInput.addEventListener('input', () => {
+            if (searchInput.value.trim() !== '') {
+                actionButton.classList.add('show');
+            } else {
+                actionButton.classList.remove('show');
+            }
+        });
+
+        searchInput.addEventListener('click', () => {
+            const left = document.querySelector('.left');
+            const right = document.querySelector('.right');
+            const isLeftActive = left.classList.contains('active');
+            const isRightActive = right.classList.contains('active');
+
+            if (!isLeftActive && !isRightActive) {
+                setActive('left');
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 100);
+            } else {
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 100);
+            }
+        });
+
+        actionButton.addEventListener('click', () => {
+            const left = document.querySelector('.left');
+            const isLeftActive = left.classList.contains('active');
+            const inputText = searchInput.value.trim();
+
+            if (inputText === '') {
+                return;
+            }
+
+            if (isLeftActive) {
+                startProgress();
+                searchInput.value = '';
+                actionButton.classList.remove('show');
+            } else {
+                searchInput.value = '';
+                actionButton.classList.remove('show');
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                actionButton.click();
+            }
+        });
+
+        function handleKeyboardVisibility() {
+            const searchBar = document.querySelector('.search-bar');
+            if (window.innerWidth <= 768) {
+                if (window.visualViewport) {
+                    function updateSearchBarPosition() {
+                        const viewport = window.visualViewport;
+                        const heightDiff = window.innerHeight - viewport.height;
+                        if (heightDiff > 150) {
+                            searchBar.style.bottom = '15px';
+                            searchBar.style.position = 'fixed';
+                            searchBar.style.transform = 'translateX(-50%)';
+                            searchBar.style.left = '50%';
+                            searchBar.style.zIndex = '9999';
+                            searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                        } else {
+                            searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
+                            searchBar.style.position = 'fixed';
+                            searchBar.style.transform = 'translateX(-50%)';
+                            searchBar.style.left = '50%';
+                            searchBar.style.zIndex = '2';
+                        }
+                    }
+                    window.visualViewport.addEventListener('resize', updateSearchBarPosition);
+                } else {
+                    let initialHeight = window.innerHeight;
+                    function handleResize() {
+                        const currentHeight = window.innerHeight;
+                        const heightDiff = initialHeight - currentHeight;
+                        if (heightDiff > 150) {
+                            searchBar.style.bottom = '15px';
+                            searchBar.style.position = 'fixed';
+                            searchBar.style.transform = 'translateX(-50%)';
+                            searchBar.style.left = '50%';
+                            searchBar.style.zIndex = '9999';
+                            setTimeout(() => {
+                                searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                            }, 100);
+                        } else {
+                            searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
+                            searchBar.style.position = 'fixed';
+                            searchBar.style.transform = 'translateX(-50%)';
+                            searchBar.style.left = '50%';
+                            searchBar.style.zIndex = '2';
+                        }
+                    }
+                    window.addEventListener('resize', handleResize);
+                }
+            }
+        }
+
+        searchInput.addEventListener('focus', () => {
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        });
+
+        handleKeyboardVisibility();
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
+
 </html>
