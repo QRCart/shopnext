@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Split Page with Bottom Search</title>
+    <title>Modi College AI</title>
     <style>
         * {
             box-sizing: border-box;
@@ -31,13 +31,13 @@
             flex: 1;
             height: 100%;
             transition: all 0.5s ease;
-            background-color: #e2e2e2; /* subtle highlight over #f8f9fa */
+            background-color: #e2e2e2;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
 
         .active {
-            background-color: #c2c2c2 !important; /* slightly more highlighted */
+            /* background-color: #c2c2c2 !important; */
             flex: 2;
         }
 
@@ -48,7 +48,7 @@
         .divider {
             position: absolute;
             width: 2px;
-            height: calc(100% - 70px);
+            height: calc(100% - 90px);
             background-color: #000;
             z-index: 1;
             transition: left 0.5s ease;
@@ -59,15 +59,15 @@
 
         .search-bar {
             position: absolute;
-            bottom: 10px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 85%;
-            max-width: 1100px;
+            width: 90%;
+            max-width: 1400px;
             z-index: 2;
             display: flex;
             background-color: #ffffff;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             border: 1px solid #ddd;
@@ -75,8 +75,8 @@
 
         input[type="text"] {
             flex: 1;
-            padding: 16px 24px;
-            font-size: 18px;
+            padding: 20px 30px;
+            font-size: 22px;
             border: none;
             outline: none;
             font-style: italic;
@@ -96,17 +96,17 @@
 
         button {
             display: none;
-            width: 40px;
-            height: 40px;
-            margin: 6px;
-            font-size: 10px; /* magnified text */
+            width: 48px;
+            height: 48px;
+            margin: 8px;
+            font-size: 12px;
             font-weight: bold;
             border: none;
             background-color: #000;
             color: #fff;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -122,92 +122,90 @@
             background-color: #222;
         }
 
-        /* Mobile responsive styles */
         @media screen and (max-width: 768px) {
             .container {
                 height: 100vh;
-                height: 100dvh; /* Dynamic viewport height for mobile */
+                height: 100dvh;
             }
 
             .search-bar {
                 width: 95%;
-                bottom: 20px;
-                border-radius: 10px;
-                position: fixed; /* Changed from absolute to fixed */
+                bottom: 25px;
+                border-radius: 12px;
+                position: fixed;
             }
 
             .search-bar.keyboard-open {
                 position: fixed;
-                bottom: 10px;
+                bottom: 15px;
                 z-index: 9999;
                 transform: translateX(-50%);
                 left: 50%;
             }
 
             input[type="text"] {
-                padding: 14px 18px;
-                font-size: 16px;
+                padding: 18px 24px;
+                font-size: 20px;
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
             }
 
             button {
-                width: 36px;
-                height: 36px;
-                margin: 5px;
-                font-size: 9px;
-                border-radius: 5px;
+                width: 44px;
+                height: 44px;
+                margin: 7px;
+                font-size: 11px;
+                border-radius: 7px;
             }
 
             .divider {
-                height: calc(100% - 80px);
+                height: calc(100% - 100px);
             }
         }
 
         @media screen and (max-width: 480px) {
             .search-bar {
                 width: 95%;
-                bottom: 15px;
-                border-radius: 8px;
-                position: fixed; /* Changed from absolute to fixed */
+                bottom: 20px;
+                border-radius: 10px;
+                position: fixed;
             }
 
             .search-bar.keyboard-open {
                 position: fixed;
-                bottom: 10px;
+                bottom: 15px;
                 z-index: 9999;
                 transform: translateX(-50%);
                 left: 50%;
             }
 
             input[type="text"] {
-                padding: 12px 16px;
-                font-size: 16px; /* Prevent zoom on iOS */
+                padding: 16px 20px;
+                font-size: 18px;
             }
 
             input::placeholder {
-                font-size: 14px;
+                font-size: 16px;
             }
 
             button {
-                width: 32px;
-                height: 32px;
-                margin: 4px;
-                font-size: 8px;
-                border-radius: 4px;
+                width: 40px;
+                height: 40px;
+                margin: 6px;
+                font-size: 10px;
+                border-radius: 6px;
             }
 
             .divider {
-                height: calc(100% - 70px);
+                height: calc(100% - 60px);
             }
         }
 
-        /* Touch device optimizations */
         @media (hover: none) and (pointer: coarse) {
             .left:active,
             .right:active {
-                background-color: #b8b8b8;
+                /* background-color: #b8b8b8; */
                 transition: background-color 0.1s ease;
             }
 
@@ -220,7 +218,6 @@
 </head>
 
 <body>
-
     <div class="container" id="container">
         <div class="left inactive" onclick="setActive('left')"></div>
         <div class="right inactive" onclick="setActive('right')"></div>
@@ -247,7 +244,7 @@
             right.classList.remove('active');
             right.classList.add('inactive');
             divider.style.left = '66.66%';
-            actionButton.textContent = 'Solve';
+            actionButton.textContent = '';
             searchInput.placeholder = 'Solve the problem that keeps you up at night.';
         } else {
             right.classList.add('active');
@@ -255,7 +252,7 @@
             left.classList.remove('active');
             left.classList.add('inactive');
             divider.style.left = '33.33%';
-            actionButton.textContent = 'Ask';
+            actionButton.textContent = '';
             searchInput.placeholder = 'Ask a Question about Problem.';
         }
     }
@@ -268,46 +265,55 @@
         }
     });
 
+    // Handle initial click on search bar to highlight left side
     searchInput.addEventListener('click', () => {
         const left = document.querySelector('.left');
         const right = document.querySelector('.right');
-
         const isLeftActive = left.classList.contains('active');
         const isRightActive = right.classList.contains('active');
 
         if (!isLeftActive && !isRightActive) {
-            alert('First click left or right area.');
+            setActive('left'); // Highlight left side on initial search bar click
+            setTimeout(() => {
+                searchInput.focus();
+            }, 100);
         } else {
-            // Force focus on mobile devices
             setTimeout(() => {
                 searchInput.focus();
             }, 100);
         }
     });
 
-    // Modern approach using Visual Viewport API with fallback
+    // Handle initial click on button to highlight right side
+    actionButton.addEventListener('click', () => {
+        const left = document.querySelector('.left');
+        const right = document.querySelector('.right');
+        const isLeftActive = left.classList.contains('active');
+        const isRightActive = right.classList.contains('active');
+
+        if (!isLeftActive && !isRightActive) {
+            setActive('right'); // Highlight right side on initial button click
+        }
+    });
+
     function handleKeyboardVisibility() {
         const searchBar = document.querySelector('.search-bar');
         
-        // Check if we're on mobile
         if (window.innerWidth <= 768) {
-            // Use Visual Viewport API if available
             if (window.visualViewport) {
                 function updateSearchBarPosition() {
                     const viewport = window.visualViewport;
                     const heightDiff = window.innerHeight - viewport.height;
                     
-                    if (heightDiff > 150) { // Keyboard is likely open
-                        searchBar.style.bottom = '10px';
+                    if (heightDiff > 150) {
+                        searchBar.style.bottom = '15px';
                         searchBar.style.position = 'fixed';
                         searchBar.style.transform = 'translateX(-50%)';
                         searchBar.style.left = '50%';
                         searchBar.style.zIndex = '9999';
-                        // Scroll to make sure search bar is visible
                         searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
                     } else {
-                        // Keyboard is closed
-                        searchBar.style.bottom = window.innerWidth <= 480 ? '15px' : '20px';
+                        searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
                         searchBar.style.position = 'fixed';
                         searchBar.style.transform = 'translateX(-50%)';
                         searchBar.style.left = '50%';
@@ -317,7 +323,6 @@
                 
                 window.visualViewport.addEventListener('resize', updateSearchBarPosition);
             } else {
-                // Fallback for older browsers
                 let initialHeight = window.innerHeight;
                 
                 function handleResize() {
@@ -325,17 +330,16 @@
                     const heightDiff = initialHeight - currentHeight;
                     
                     if (heightDiff > 150) {
-                        searchBar.style.bottom = '10px';
+                        searchBar.style.bottom = '15px';
                         searchBar.style.position = 'fixed';
                         searchBar.style.transform = 'translateX(-50%)';
                         searchBar.style.left = '50%';
                         searchBar.style.zIndex = '9999';
-                        // Force scroll to search bar
                         setTimeout(() => {
                             searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
                         }, 100);
                     } else {
-                        searchBar.style.bottom = window.innerWidth <= 480 ? '15px' : '20px';
+                        searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
                         searchBar.style.position = 'fixed';
                         searchBar.style.transform = 'translateX(-50%)';
                         searchBar.style.left = '50%';
@@ -348,7 +352,6 @@
         }
     }
 
-    // Handle input focus for better mobile experience
     searchInput.addEventListener('focus', () => {
         if (window.innerWidth <= 768) {
             setTimeout(() => {
@@ -357,10 +360,8 @@
         }
     });
 
-    // Initialize keyboard handling
     handleKeyboardVisibility();
 
-    // Prevent zoom on double-tap for mobile
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function (event) {
         const now = (new Date()).getTime();
@@ -370,7 +371,5 @@
         lastTouchEnd = now;
     }, false);
 </script>
-
 </body>
-
 </html>
