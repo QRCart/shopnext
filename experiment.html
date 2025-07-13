@@ -1,550 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modi College AI</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <title>Black Hole Search Bar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body,
-        html {
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-        }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #000 60%, #111);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: Arial, sans-serif;
+      position: relative;
+      padding: 20px;
+    }
 
-        .container {
-            display: flex;
-            height: 100vh;
-            position: relative;
-            transition: all 0.5s ease;
-        }
+    .search-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .left,
-        .right {
-            flex: 1;
-            height: 100%;
-            transition: all 0.5s ease;
-            background-color: #e2e2e2;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      font-size: 20px;
+      font-family: 'Orbitron', sans-serif;
+      padding: 0;
+      margin: 0;
+    }
 
-        .top-message {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            font-size: 16px;
-            font-weight: 500;
-            color: #333;
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 5;
-        }
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
 
-        .top-message.show {
-            opacity: 1;
-            visibility: visible;
-        }
+    .blackhole {
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle at center, #111 30%, #000, #000);
+      border-radius: 50%;
+      margin-left: 10px;
+      animation: spin 2s linear infinite;
+      box-shadow: 
+        0 0 10px #333 inset,
+        0 0 20px 5px rgba(255, 255, 255, 0.05),
+        0 0 40px 10px rgba(0, 0, 0, 0.8);
+      transition: all 0.3s ease-in-out;
+      flex-shrink: 0;
+    }
 
-        .progress-container {
-            position: absolute;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 5;
-        }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
-        .progress-container.show {
-            opacity: 1;
-            visibility: visible;
-        }
+    .letter {
+      position: fixed;
+      font-size: 20px;
+      color: white;
+      pointer-events: none;
+      transition: all 1s ease-in;
+      font-family: 'Orbitron', sans-serif;
+      z-index: 1000;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
 
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
+    .dot {
+      width: 6px;
+      height: 6px;
+      background-color: white;
+      border-radius: 50%;
+      position: fixed;
+      box-shadow: 0 0 10px white;
+      animation: grow 1.5s forwards;
+      z-index: 1000;
+    }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #45a049);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+    @keyframes grow {
+      from {
+        transform: scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
 
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-image: linear-gradient(-45deg,
-                    rgba(255, 255, 255, .2) 25%,
-                    transparent 25%,
-                    transparent 50%,
-                    rgba(255, 255, 255, .2) 50%,
-                    rgba(255, 255, 255, .2) 75%,
-                    transparent 75%,
-                    transparent);
-            background-size: 30px 30px;
-            animation: progress-animation 2s linear infinite;
-        }
+    /* Tablet styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
 
-        @keyframes progress-animation {
-            0% {
-                background-position: 0 0;
-            }
+      .search-container {
+        height: 50px;
+        padding: 0 15px;
+        margin-bottom: 20px;
+        max-width: 100%;
+      }
 
-            100% {
-                background-position: 30px 0;
-            }
-        }
+      input {
+        font-size: 18px;
+      }
 
-        .active {
-            flex: 3;
-        }
+      .blackhole {
+        width: 25px;
+        height: 25px;
+        margin-left: 8px;
+      }
 
-        .inactive {
-            flex: 1;
-        }
+      .letter {
+        font-size: 18px;
+      }
 
-        .divider {
-            position: absolute;
-            width: 2px;
-            height: calc(100% - 90px);
-            background-color: #000;
-            z-index: 1;
-            transition: left 0.5s ease;
-            left: 50%;
-            transform: translateX(-1px);
-            top: 0;
-        }
+      .dot {
+        width: 5px;
+        height: 5px;
+      }
+    }
 
-        .search-bar {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1400px;
-            z-index: 2;
-            display: flex;
-            background-color: #ffffff;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            border: 1px solid #ddd;
-        }
+    /* Mobile styles */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
 
-        input[type="text"] {
-            flex: 1;
-            padding: 20px 30px;
-            font-size: 22px;
-            border: none;
-            outline: none;
-            font-style: italic;
-            color: #333;
-            background-color: #fafafa;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
+      .search-container {
+        height: 45px;
+        padding: 0 12px;
+        margin-bottom: 15px;
+        border-radius: 22px;
+      }
 
-        input::placeholder {
-            color: #444;
-            font-style: italic;
-            font-weight: 500;
-        }
+      input {
+        font-size: 16px;
+      }
 
-        button {
-            width: 48px;
-            height: 48px;
-            margin: 8px;
-            font-size: 12px;
-            font-weight: bold;
-            border: none;
-            background-color: #000;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+      .blackhole {
+        width: 20px;
+        height: 20px;
+        margin-left: 6px;
+      }
 
-        button.show {
-            display: flex;
-        }
+      .letter {
+        font-size: 16px;
+      }
 
-        button:hover {
-            background-color: #222;
-        }
+      .dot {
+        width: 4px;
+        height: 4px;
+      }
+    }
 
-        @media screen and (max-width: 768px) {
-            .container {
-                height: 100vh;
-                height: 100dvh;
-            }
+    /* Very small mobile devices */
+    @media (max-width: 320px) {
+      .search-container {
+        height: 40px;
+        padding: 0 10px;
+      }
 
-            .search-bar {
-                width: 95%;
-                bottom: 25px;
-                border-radius: 12px;
-                position: fixed;
-            }
+      input {
+        font-size: 14px;
+      }
 
-            .search-bar.keyboard-open {
-                position: fixed;
-                bottom: 15px;
-                z-index: 9999;
-                transform: translateX(-50%);
-                left: 50%;
-            }
+      .blackhole {
+        width: 18px;
+        height: 18px;
+        margin-left: 5px;
+      }
 
-            input[type="text"] {
-                padding: 18px 24px;
-                font-size: 20px;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-            }
-
-            button {
-                width: 44px;
-                height: 44px;
-                margin: 7px;
-                font-size: 11px;
-                border-radius: 7px;
-            }
-
-            .divider {
-                height: calc(100% - 100px);
-            }
-
-            .top-message {
-                top: 15px;
-                font-size: 14px;
-                padding: 12px 20px;
-                max-width: 350px;
-            }
-
-            .progress-container {
-                top: 65px;
-                max-width: 350px;
-                padding: 12px;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .search-bar {
-                width: 95%;
-                bottom: 20px;
-                border-radius: 10px;
-                position: fixed;
-            }
-
-            .search-bar.keyboard-open {
-                position: fixed;
-                bottom: 15px;
-                z-index: 9999;
-                transform: translateX(-50%);
-                left: 50%;
-            }
-
-            input[type="text"] {
-                padding: 16px 20px;
-                font-size: 18px;
-            }
-
-            input::placeholder {
-                font-size: 16px;
-            }
-
-            button {
-                width: 40px;
-                height: 40px;
-                margin: 6px;
-                font-size: 16px;
-                border-radius: 6px;
-            }
-
-            .divider {
-                height: calc(100% - 60px);
-            }
-
-            .top-message {
-                top: 10px;
-                font-size: 13px;
-                padding: 10px 15px;
-                max-width: 320px;
-            }
-
-            .progress-container {
-                top: 55px;
-                max-width: 320px;
-                padding: 10px;
-            }
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-
-            .left:active,
-            .right:active {
-                transition: none;
-            }
-
-            button:active {
-                background-color: #333;
-            }
-        }
-    </style>
+      .letter {
+        font-size: 14px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container" id="container">
-        <div class="left inactive" onclick="setActive('left')">
-            <div class="top-message" id="topMessage">
-                Controlled Experiment will take : 5 hour </div>
-            <div class="progress-container" id="progressContainer">
-                <div class="progress-bar"> 
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-            </div>
-        </div>
-        <div class="right inactive" onclick="setActive('right')">
-        </div>
-        <div class="divider" id="divider"></div>
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Click Left or Right Area">
-            <button id="actionButton"></button>
-        </div>
-    </div>
-    <script>
-        const divider = document.getElementById('divider');
-        const actionButton = document.getElementById('actionButton');
-        const searchInput = document.getElementById('searchInput');
-        const topMessage = document.getElementById('topMessage');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
+  <div class="search-container">
+    <input type="text" id="search" autocomplete="off" placeholder="Solve..." />
+    <div class="blackhole" id="hole"></div>
+  </div>
 
-        let progressInterval;
-        let currentProgress = 10; // Set initial progress to 10%
-        let startTime;
+  <script>
+    const input = document.getElementById('search');
+    const hole = document.getElementById('hole');
 
-        function updateProgress() {
-            const elapsed = Date.now() - startTime;
-            const totalTime = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
-            const progress = Math.max(10, Math.min((elapsed / totalTime) * 100, 100)); // Ensure progress doesn't go below 10%
-
-            currentProgress = progress;
-            progressFill.style.width = progress + '%';
-
-            if (progress >= 100) {
-                clearInterval(progressInterval);
-            }
+    // Throttle function to limit the frequency of letter creation
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
         }
+      }
+    }
 
-        function startProgress() {
-            startTime = Date.now();
-            currentProgress = 10; // Set initial progress to 10%
-            progressFill.style.width = '10%'; // Set initial width
-            topMessage.classList.add('show');
-            progressContainer.classList.add('show');
+    const createLetter = throttle((lastChar) => {
+      if (!lastChar || lastChar === ' ') return;
 
-            // Update every second
-            progressInterval = setInterval(updateProgress, 1000);
-            updateProgress(); // Initial update
-        }
+      const span = document.createElement('span');
+      span.textContent = lastChar;
+      span.className = 'letter';
 
-        function stopProgress() {
-            clearInterval(progressInterval);
-            topMessage.classList.remove('show');
-            progressContainer.classList.remove('show');
-        }
+      // Get container position relative to viewport
+      const containerRect = input.getBoundingClientRect();
+      const holeRect = hole.getBoundingClientRect();
+      
+      // Calculate responsive positioning
+      const containerPadding = window.innerWidth <= 480 ? 12 : window.innerWidth <= 768 ? 15 : 20;
+      const randomOffset = Math.random() * (containerRect.width - containerPadding * 2);
+      
+      // Position letter within the input area
+      span.style.left = (containerRect.left + containerPadding + randomOffset) + 'px';
+      span.style.top = (containerRect.top + containerRect.height / 2 - 10) + 'px';
 
-        function setActive(side) {
-            const left = document.querySelector('.left');
-            const right = document.querySelector('.right');
+      document.body.appendChild(span);
 
-            if (side === 'left') {
-                left.classList.add('active');
-                left.classList.remove('inactive');
-                right.classList.remove('active');
-                right.classList.add('inactive');
-                divider.style.left = '75%';
-                actionButton.textContent = '🌙';
-                searchInput.placeholder = 'Solve the problem that keeps you up at night.';
-            } else {
-                right.classList.add('active');
-                right.classList.remove('inactive');
-                left.classList.remove('active');
-                left.classList.add('inactive');
-                divider.style.left = '25%';
-                actionButton.textContent = '🤔';
-                searchInput.placeholder = 'Ask a Question about Problem.';
+      // Animate letter to black hole
+      setTimeout(() => {
+        const currentHoleRect = hole.getBoundingClientRect();
+        const holeSize = window.innerWidth <= 320 ? 18 : window.innerWidth <= 480 ? 20 : window.innerWidth <= 768 ? 25 : 30;
+        
+        span.style.left = (currentHoleRect.left + holeSize / 2) + 'px';
+        span.style.top = (currentHoleRect.top + holeSize / 2) + 'px';
+        span.style.opacity = '0';
+        span.style.transform = 'scale(0.3)';
+
+        // Create dot effect
+        setTimeout(() => {
+          const dot = document.createElement('div');
+          dot.className = 'dot';
+          const dotOffset = window.innerWidth <= 320 ? 9 : window.innerWidth <= 480 ? 10 : window.innerWidth <= 768 ? 12 : 15;
+          dot.style.left = (currentHoleRect.left + dotOffset) + 'px';
+          dot.style.top = (currentHoleRect.top + dotOffset) + 'px';
+          document.body.appendChild(dot);
+          
+          setTimeout(() => {
+            if (dot.parentNode) {
+              dot.remove();
             }
-        }
+          }, 1500);
+          
+          if (span.parentNode) {
+            span.remove();
+          }
+        }, 900);
+      }, 10);
+    }, 50);
 
-        searchInput.addEventListener('input', () => {
-            if (searchInput.value.trim() !== '') {
-                actionButton.classList.add('show');
-            } else {
-                actionButton.classList.remove('show');
-            }
-        });
+    input.addEventListener('input', (e) => {
+      const value = input.value;
+      if (!value) return;
+      const lastChar = value[value.length - 1];
+      createLetter(lastChar);
+    });
 
-        searchInput.addEventListener('click', () => {
-            const left = document.querySelector('.left');
-            const right = document.querySelector('.right');
-            const isLeftActive = left.classList.contains('active');
-            const isRightActive = right.classList.contains('active');
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Clean up any existing letters and dots on resize
+        const letters = document.querySelectorAll('.letter');
+        const dots = document.querySelectorAll('.dot');
+        letters.forEach(letter => letter.remove());
+        dots.forEach(dot => dot.remove());
+      }, 100);
+    });
 
-            if (!isLeftActive && !isRightActive) {
-                setActive('left');
-                setTimeout(() => {
-                    searchInput.focus();
-                }, 100);
-            } else {
-                setTimeout(() => {
-                    searchInput.focus();
-                }, 100);
-            }
-        });
-
-        actionButton.addEventListener('click', () => {
-            const left = document.querySelector('.left');
-            const isLeftActive = left.classList.contains('active');
-            const inputText = searchInput.value.trim();
-
-            if (inputText === '') {
-                return;
-            }
-
-            if (isLeftActive) {
-                startProgress();
-                searchInput.value = '';
-                actionButton.classList.remove('show');
-            } else {
-                searchInput.value = '';
-                actionButton.classList.remove('show');
-            }
-        });
-
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                actionButton.click();
-            }
-        });
-
-        function handleKeyboardVisibility() {
-            const searchBar = document.querySelector('.search-bar');
-            if (window.innerWidth <= 768) {
-                if (window.visualViewport) {
-                    function updateSearchBarPosition() {
-                        const viewport = window.visualViewport;
-                        const heightDiff = window.innerHeight - viewport.height;
-                        if (heightDiff > 150) {
-                            searchBar.style.bottom = '15px';
-                            searchBar.style.position = 'fixed';
-                            searchBar.style.transform = 'translateX(-50%)';
-                            searchBar.style.left = '50%';
-                            searchBar.style.zIndex = '9999';
-                            searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                        } else {
-                            searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
-                            searchBar.style.position = 'fixed';
-                            searchBar.style.transform = 'translateX(-50%)';
-                            searchBar.style.left = '50%';
-                            searchBar.style.zIndex = '2';
-                        }
-                    }
-                    window.visualViewport.addEventListener('resize', updateSearchBarPosition);
-                } else {
-                    let initialHeight = window.innerHeight;
-                    function handleResize() {
-                        const currentHeight = window.innerHeight;
-                        const heightDiff = initialHeight - currentHeight;
-                        if (heightDiff > 150) {
-                            searchBar.style.bottom = '15px';
-                            searchBar.style.position = 'fixed';
-                            searchBar.style.transform = 'translateX(-50%)';
-                            searchBar.style.left = '50%';
-                            searchBar.style.zIndex = '9999';
-                            setTimeout(() => {
-                                searchBar.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                            }, 100);
-                        } else {
-                            searchBar.style.bottom = window.innerWidth <= 480 ? '20px' : '25px';
-                            searchBar.style.position = 'fixed';
-                            searchBar.style.transform = 'translateX(-50%)';
-                            searchBar.style.left = '50%';
-                            searchBar.style.zIndex = '2';
-                        }
-                    }
-                    window.addEventListener('resize', handleResize);
-                }
-            }
-        }
-
-        searchInput.addEventListener('focus', () => {
-            if (window.innerWidth <= 768) {
-                setTimeout(() => {
-                    searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300);
-            }
-        });
-
-        handleKeyboardVisibility();
-
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-    </script>
+    // Prevent zoom on double tap (iOS)
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+  </script>
 </body>
-
 </html>
