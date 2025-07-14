@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Bar with Liquid Glass Effect</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 
     <style>
@@ -20,6 +20,7 @@
             cursor: pointer;
             box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+            border: 1px solid red;
         }
 
         .liquidGlass-effect {
@@ -96,7 +97,7 @@
             font-size: 20px;
             color: black;
             outline: none;
-  font-family: 'Noto Sans', sans-serif;
+            font-family: 'Noto Sans', sans-serif;
         }
 
         .search-input input::placeholder {
@@ -113,7 +114,7 @@
             border-radius: 5rem;
             width: 3rem;
             height: 3rem;
-            margin: 1px 5px;
+            /* margin: 1px 5px; */
         }
 
         /* .search-button:hover {
@@ -166,9 +167,16 @@
             justify-content: center;
             margin-bottom: 2rem;
         }
-.border{
-    /* border:  solid black 1px; */
-}
+
+        .border {
+            border: solid black 1px;
+        }
+
+        .search-button {
+            /* border: 1px solid red; */
+            width: 2rem;
+            margin: 1px 9px;
+        }
     </style>
 </head>
 
@@ -176,11 +184,11 @@
     <div class="page">
         <div class="wrapper">
             <div class="pos pos2">
-                <div class="liquidGlass-wrapper search-button border">
-                    <div class="liquidGlass-effect border"></div>
-                    <div class="liquidGlass-tint border"></div>
-                    <div class="liquidGlass-shine border"></div>
-                    <div class="liquidGlass-text border">
+                <div class="liquidGlass-wrapper search-button ">
+                    <div class="liquidGlass-effect "></div>
+                    <div class="liquidGlass-tint "></div>
+                    <div class="liquidGlass-shine "></div>
+                    <div class="liquidGlass-text ">
 
                     </div>
                 </div>
@@ -210,7 +218,7 @@
 
                     </div>
                 </div>
-                 <div class="liquidGlass-wrapper search-button button1">
+                <div class="liquidGlass-wrapper search-button button1">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
