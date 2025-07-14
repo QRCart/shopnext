@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Bar with Liquid Glass Effect</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 
     <style>
@@ -13,7 +14,7 @@
         .liquidGlass-wrapper {
             position: relative;
             display: flex;
-            font-weight: 600;
+            /* font-weight: 600; */
             overflow: hidden;
             color: black;
             cursor: pointer;
@@ -49,7 +50,7 @@
 
         .liquidGlass-text {
             z-index: 3;
-            font-size: 0.5rem;
+            font-size: 5px;
             color: black;
             /* border: 1px solid black; */
         }
@@ -64,8 +65,8 @@
             height: 100vh;
             background: url("https://raw.githubusercontent.com/lucasromerodb/liquid-glass-effect-macos/refs/heads/main/assets/flowers.jpg") center center;
             background-size: 500px;
-            font-family: sans-serif;
-            font-weight: 300;
+            /* font-family: sans-serif; */
+            /* font-weight: 300; */
             animation: moveBackground 60s linear infinite;
             flex-direction: row
         }
@@ -92,10 +93,10 @@
             width: 69rem;
             border: none;
             background: transparent;
-            font-size: 2.2rem;
+            font-size: 20px;
             color: black;
             outline: none;
-            font-family: monospace;
+  font-family: 'Noto Sans', sans-serif;
         }
 
         .search-input input::placeholder {
@@ -115,16 +116,16 @@
             margin: 1px 5px;
         }
 
-        .search-button:hover {
+        /* .search-button:hover {
             padding: 1rem 1.8rem;
-        }
+        } */
 
-        .search-button:hover>div {
+        /* .search-button:hover>div {
             border-radius: 2rem;
-        }
+        } */
 
         .search-button .liquidGlass-text {
-            font-size: 1.2rem;
+            /* font-size: 1.2rem; */
             text-align: center;
         }
 
@@ -165,11 +166,9 @@
             justify-content: center;
             margin-bottom: 2rem;
         }
-
-        body {
-            font-family: 'Noto Sans', sans-serif;
-            font-size: 5px;
-        }
+.border{
+    /* border:  solid black 1px; */
+}
     </style>
 </head>
 
@@ -177,11 +176,11 @@
     <div class="page">
         <div class="wrapper">
             <div class="pos pos2">
-                <div class="liquidGlass-wrapper search-button">
-                    <div class="liquidGlass-effect"></div>
-                    <div class="liquidGlass-tint"></div>
-                    <div class="liquidGlass-shine"></div>
-                    <div class="liquidGlass-text">
+                <div class="liquidGlass-wrapper search-button border">
+                    <div class="liquidGlass-effect border"></div>
+                    <div class="liquidGlass-tint border"></div>
+                    <div class="liquidGlass-shine border"></div>
+                    <div class="liquidGlass-text border">
 
                     </div>
                 </div>
