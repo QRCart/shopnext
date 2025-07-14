@@ -67,8 +67,7 @@
             background-size: 500px;
             animation: moveBackground 60s linear infinite;
             flex-direction: row;
-            align-items: center;
-
+            overflow: hidden;
         }
 
         .wrapper {
@@ -80,6 +79,7 @@
             width: 90%;
             max-width: 50rem;
             position: relative;
+            margin-bottom: 2rem;
         }
 
         .search-input {
@@ -121,7 +121,7 @@
             text-align: center;
         }
 
-        /* HOVER EFFECT FOR BUTTONS */
+        /* HOVER EFFECTS */
         .search-button:hover {
             background-color: rgba(255, 255, 255, 0.5);
             box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
@@ -135,9 +135,8 @@
             backdrop-filter: blur(2px);
         }
 
-        /* Button states */
         .search-button.active {
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.7);
             box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(2px);
         }
@@ -264,7 +263,6 @@
             overflow-y: auto;
         }
 
-
         .liquidGlass-text {
             z-index: 3;
             width: 100%;
@@ -302,6 +300,7 @@
 </head>
 
 <body>
+    <!-- Background content area -->
     <div class="page">
         <div class="wrapper">
             <div class="pos pos2">
@@ -359,18 +358,8 @@
     </svg>
 
     <script>
-        window.addEventListener('load', function () {
-            // Existing API key check
-            if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-                console.warn('⚠️ API key not configured. Please replace YOUR_API_KEY_HERE with your actual Gemini API key.');
-            }
-
-            // ✅ Focus the textarea so the cursor appears on page load
-            searchInput.focus();
-        });
-
         // Configuration - REPLACE WITH YOUR ACTUAL API KEY
-        const GEMINI_API_KEY = 'AIzaSyCN1LNQGg_0QMev6tasgwC6iVDyEB8OK9o'; // ⚠️ Replace this with your actual API key
+        const GEMINI_API_KEY = 'AIzaSyCN1LNQGg_0QMev6tasgwC6iVDyEB8OK9o';
         const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
         // State management
@@ -445,7 +434,7 @@
                 // Prepare the prompt
                 let prompt;
                 if (isControlledExperimentMode) {
-                    prompt = `if we do controlled experiment ,How can controlled experiments help with "${userQuestion}"? give a short answer`;
+                    prompt = `if we do controlled experiment, How can controlled experiments help with the problem "${userQuestion}"? give a short answer`;
                 } else {
                     prompt = userQuestion;
                 }
@@ -478,7 +467,6 @@
 
                 logDebug('Response status', response.status);
 
-                // Get response text for debugging
                 const responseText = await response.text();
                 logDebug('Raw response', responseText);
 
@@ -489,7 +477,6 @@
                 const data = JSON.parse(responseText);
                 logDebug('Parsed response', data);
 
-                // Check for different response structures
                 if (data.candidates && data.candidates.length > 0) {
                     const candidate = data.candidates[0];
 
@@ -551,7 +538,7 @@
                         <li>Verify your API key is valid and has the correct permissions</li>
                         <li>Check that the Gemini API is enabled in your Google Cloud Console</li>
                         <li>Ensure you have a stable internet connection</li>
-                        <li>Try clicking the debug button (🔧) for more detailed error information</li>
+                        <li>Try clicking the debug button (😎) for more detailed error information</li>
                     </ul>
                     <p>Get your API key from: <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: #ff6b6b;">Google AI Studio</a></p>
                 </div>
@@ -565,16 +552,17 @@
                 // Reset state if clicking outside
                 isControlledExperimentMode = false;
                 controlledExperimentBtn.classList.remove('active');
-                searchInput.placeholder = "Enter your question...";
+                searchInput.placeholder = "";
                 resultContainer.style.display = 'none';
             }
         });
 
-        // Test API key on page load
+        // Initialize
         window.addEventListener('load', function () {
             if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
                 console.warn('⚠️ API key not configured. Please replace YOUR_API_KEY_HERE with your actual Gemini API key.');
             }
+            searchInput.focus();
         });
     </script>
 </body>
