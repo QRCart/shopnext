@@ -49,14 +49,16 @@
     }
 
     .search-tab {
-      background: rgba(255, 255, 255, 0.1);
-      color: #aaa;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #eee;
       padding: 6px 12px;
       border-radius: 12px;
       font-size: 0.75rem;
       cursor: pointer;
       transition: 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       position: relative;
       overflow: hidden;
     }
@@ -91,29 +93,31 @@
       padding: 14px 22px;
       border: none;
       outline: none;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       color: #fff;
       border-radius: 18px;
       font-size: 1.1rem;
       font-family: 'Share Tech Mono', monospace;
       transition: 0.3s;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .bullet-input:focus {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.15);
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
                   0 0 0 2px rgba(255, 255, 255, 0.1);
     }
 
     .bullet-input::placeholder {
-      color: #888;
+      color: #ccc;
       transition: 0.3s;
     }
 
     .bullet-input:focus::placeholder {
-      color: #aaa;
+      color: #eee;
     }
 
     .trigger-button {
@@ -158,7 +162,7 @@
       <div class="search-tab" data-placeholder="What experiment should we try?">Do Experiment</div>
       <div class="search-tab" data-placeholder="What's on your mind?">Ask question</div>
     </div>
-    <input type="text" class="bullet-input" id="input" placeholder="How will you change the world?">
+    <input type="text" class="bullet-input" id="input" placeholder="">
     <button class="trigger-button" id="trigger"></button>
   </div>
 
