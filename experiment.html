@@ -543,17 +543,6 @@
             `;
         }
 
-        // Reset functionality
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('.wrapper') && !e.target.closest('.result-container')) {
-                // Reset state if clicking outside
-                isControlledExperimentMode = false;
-                controlledExperimentBtn.classList.remove('active');
-                searchInput.placeholder = "";
-                resultContainer.style.display = 'none';
-            }
-        });
-
         // Initialize
         window.addEventListener('load', function () {
             if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
