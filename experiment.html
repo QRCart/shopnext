@@ -275,7 +275,7 @@
   border: none;
   background: transparent;
   font-size: 20px;
-  color: black;
+  color: white;
   outline: none;
   font-family: 'Noto Sans', sans-serif;
   resize: none;
@@ -440,7 +440,7 @@
                 // Prepare the prompt
                 let prompt;
                 if (isControlledExperimentMode) {
-                    prompt = `How can controlled experiments help with "${userQuestion}"?`;
+                    prompt = `if we do controlled experiment ,How can controlled experiments help with "${userQuestion}"? give a short answer`;
                 } else {
                     prompt = userQuestion;
                 }
@@ -511,8 +511,8 @@
 
         function displayResult(answer, question) {
             const title = isControlledExperimentMode ? 
-                `🔬 Controlled Experiments for: "${question}"` : 
-                `📝 Answer for: "${question}"`;
+                `` : 
+                ``;
             
             resultContent.innerHTML = `
                 <h3>${title}</h3>
