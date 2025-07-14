@@ -344,7 +344,7 @@
       for (let i = 0; i < count; i++) {
         const hole = document.createElement('div');
         hole.classList.add('background-bullet-hole');
-        const size = 3 + Math.random() * 9;
+        const size = 3 + Math.random() * 4;
         hole.style.width = `${size}px`;
         hole.style.height = `${size}px`;
         hole.style.left = `${Math.random() * (window.innerWidth - size)}px`;
@@ -399,9 +399,6 @@
         sound.currentTime = 0;
         sound.play().catch(() => {}); // Ignore audio errors on autoplay
         
-        body.classList.add('shake');
-        setTimeout(() => body.classList.remove('shake'), 200);
-        
         const left = Math.random() * (window.innerWidth - 6);
         const top = Math.random() * (window.innerHeight - 86);
         
@@ -453,7 +450,7 @@
     }
     
     // Start auto-firing after 1 second delay
-    setTimeout(autoFire, 2000);
+    setTimeout(autoFire, 1000);
 
     window.addEventListener('resize', refreshParticles);
 
