@@ -48,6 +48,47 @@
       z-index: 1;
     }
 
+    .gas-particle {
+      position: fixed;
+      background: rgba(180, 180, 180, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: gasFloat 12s infinite ease-in-out;
+      box-shadow: 0 0 3px rgba(200, 200, 200, 0.3);
+    }
+
+    .gas-particle:nth-child(odd) {
+      animation-delay: -2s;
+    }
+
+    .gas-particle:nth-child(3n) {
+      animation-delay: -4s;
+    }
+
+    .gas-particle:nth-child(4n) {
+      animation-delay: -6s;
+    }
+
+    @keyframes gasFloat {
+      0%, 100% { 
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.2;
+      }
+      25% { 
+        transform: translateY(-15px) translateX(8px) scale(1.1);
+        opacity: 0.4;
+      }
+      50% { 
+        transform: translateY(-8px) translateX(-12px) scale(0.9);
+        opacity: 0.1;
+      }
+      75% { 
+        transform: translateY(-20px) translateX(5px) scale(1.05);
+        opacity: 0.3;
+      }
+    }
+
     .crack {
       position: absolute;
       width: 20px;
@@ -131,25 +172,11 @@
     }
 
     @keyframes shake {
-      0% {
-        transform: translate(0, 0);
-      }
-
-      25% {
-        transform: translate(-4px, 4px);
-      }
-
-      50% {
-        transform: translate(4px, -4px);
-      }
-
-      75% {
-        transform: translate(-4px, 4px);
-      }
-
-      100% {
-        transform: translate(0, 0);
-      }
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-4px, 4px); }
+      50% { transform: translate(4px, -4px); }
+      75% { transform: translate(-4px, 4px); }
+      100% { transform: translate(0, 0); }
     }
 
     .smoke {
@@ -176,38 +203,32 @@
       z-index: 1;
     }
 
+    .spark {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: red;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(255, 0, 0, 0.8);
+      animation: sparkFly 0.6s ease-out forwards;
+      z-index: 2;
+    }
+
     @keyframes smoke {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.6;
-      }
-
-      50% {
-        transform: translateY(-20px) scale(1.2);
-        opacity: 0.3;
-      }
-
-      100% {
-        transform: translateY(-40px) scale(1.5);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      50% { transform: translateY(-20px) scale(1.2); opacity: 0.3; }
+      100% { transform: translateY(-40px) scale(1.5); opacity: 0; }
     }
 
     @keyframes longSmoke {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.5;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 0.5; }
+      50% { transform: translateY(-50px) scale(1.5); opacity: 0.3; }
+      100% { transform: translateY(-120px) scale(2.5); opacity: 0; }
+    }
 
-      50% {
-        transform: translateY(-50px) scale(1.5);
-        opacity: 0.3;
-      }
-
-      100% {
-        transform: translateY(-120px) scale(2.5);
-        opacity: 0;
-      }
+    @keyframes sparkFly {
+      0% { transform: translate(0, 0); opacity: 1; }
+      100% { transform: translateY(-30px) scale(0.5); opacity: 0; }
     }
   </style>
 </head>
@@ -223,7 +244,7 @@
       <div class="search-tab">Ask question</div>
     </div>
     <input type="text" class="bullet-input" id="input">
-    <button class="trigger-button" id="trigger"></button>
+    <button class="trigger-button" id="trigger">→</button>
   </div>
 
   <script>
@@ -237,16 +258,53 @@
       for (let i = 0; i < count; i++) {
         const hole = document.createElement('div');
         hole.classList.add('background-bullet-hole');
-        const size = Math.random() * 3 + 4; // Random size between 4px and 7px
+        const size = 3 + Math.random() * 4;
         hole.style.width = `${size}px`;
         hole.style.height = `${size}px`;
-        hole.style.left = `${Math.random() * window.innerWidth}px`;
-        hole.style.top = `${Math.random() * window.innerHeight}px`;
+        hole.style.left = `${Math.random() * (window.innerWidth - size)}px`;
+        hole.style.top = `${Math.random() * (window.innerHeight - size)}px`;
         body.appendChild(hole);
       }
     }
 
-    addBackgroundBulletHoles(20);
+    function addGasParticles(count) {
+      setTimeout(() => {
+        for (let i = 0; i < count; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('gas-particle');
+          const size = 2 + Math.random() * 4; // Small particles 2-6px
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          
+          // Ensure particles are distributed across the full screen including right edge
+          const maxLeft = window.innerWidth - size;
+          const maxTop = window.innerHeight - size;
+          
+          particle.style.left = `${Math.random() * maxLeft}px`;
+          particle.style.top = `${Math.random() * maxTop}px`;
+          particle.style.animationDuration = `${8 + Math.random() * 8}s`; // Slower animation
+          particle.style.animationDelay = `${Math.random() * 5}s`; // Random start delay
+          
+          body.appendChild(particle);
+        }
+      }, 100);
+    }
+
+    // Add particles on window resize to maintain coverage
+    function refreshParticles() {
+      // Remove existing particles
+      const existingParticles = document.querySelectorAll('.gas-particle');
+      existingParticles.forEach(particle => particle.remove());
+      
+      // Add new particles
+      addGasParticles(100);
+    }
+
+    addBackgroundBulletHoles(25);
+    addGasParticles(100); // Increased particle count for better coverage
+
+    // Refresh particles on window resize
+    window.addEventListener('resize', refreshParticles);
 
     trigger.addEventListener('click', () => {
       gun.classList.add('fired');
@@ -260,8 +318,8 @@
         window.navigator.vibrate(100);
       }
 
-      const left = Math.random() * window.innerWidth;
-      const top = Math.random() * (window.innerHeight - 80);
+      const left = Math.random() * (window.innerWidth - 6);
+      const top = Math.random() * (window.innerHeight - 86); // Account for gun container height
 
       const hole = document.createElement('div');
       hole.classList.add('bullet-hole');
@@ -275,6 +333,7 @@
       crack.classList.add('crack');
       crack.style.left = `${left - 10}px`;
       crack.style.top = `${top - 10}px`;
+      crack.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random() * 0.4})`;
       body.appendChild(crack);
 
       const smoke = document.createElement('div');
@@ -283,16 +342,23 @@
       smoke.style.top = `${top - 4}px`;
       body.appendChild(smoke);
 
+      const spark = document.createElement('div');
+      spark.classList.add('spark');
+      spark.style.left = `${left + 2}px`;
+      spark.style.top = `${top + 2}px`;
+      body.appendChild(spark);
+
       const triggerRect = trigger.getBoundingClientRect();
       const longSmoke = document.createElement('div');
       longSmoke.classList.add('long-smoke');
       longSmoke.style.left = `${triggerRect.left + triggerRect.width / 2 - 12}px`;
-      longSmoke.style.top = `${triggerRect.top - 20}px`;
+      longSmoke.style.top = `${triggerRect.top - 20 + window.scrollY}px`;
       body.appendChild(longSmoke);
 
       setTimeout(() => {
         gun.classList.remove('fired');
         smoke.remove();
+        spark.remove();
       }, 1500);
 
       setTimeout(() => {
