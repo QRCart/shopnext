@@ -14,7 +14,7 @@
             overflow: hidden;
             color: black;
             cursor: pointer;
-            box-shadow: 0 0.3vw 0.3vw rgba(0, 0, 0, 0.2), 0 0 1vw rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
         }
 
@@ -22,7 +22,7 @@
             position: absolute;
             z-index: 0;
             inset: 0;
-            backdrop-filter: blur(0.15vw);
+            backdrop-filter: blur(3px);
             filter: url(#glass-distortion);
             overflow: hidden;
             isolation: isolate;
@@ -32,9 +32,7 @@
             z-index: 1;
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255,
-
- 0.25);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .liquidGlass-shine {
@@ -42,14 +40,15 @@
             inset: 0;
             z-index: 2;
             overflow: hidden;
-            box-shadow: inset 0.1vw 0.1vw 0.05vw 0 rgba(255, 255, 255, 0.5),
-                inset -0.05vw -0.05vw 0.05vw 0.05vw rgba(255, 255, 255, 0.5);
+            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
+                inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5);
         }
 
         .liquidGlass-text {
             z-index: 3;
-            font-size: 2vw;
+            font-size: 2rem;
             color: black;
+            /* border: 1px solid black; */
         }
 
         /* OTHER STYLES */
@@ -61,7 +60,7 @@
             justify-content: center;
             height: 100vh;
             background: url("https://raw.githubusercontent.com/lucasromerodb/liquid-glass-effect-macos/refs/heads/main/assets/flowers.jpg") center center;
-            background-size: cover;
+            background-size: 500px;
             font-family: sans-serif;
             font-weight: 300;
             animation: moveBackground 60s linear infinite;
@@ -70,26 +69,26 @@
         .wrapper {
             display: flex;
             flex-direction: column;
-            gap: 0.5vw;
+            gap: 10px;
             justify-content: center;
             align-items: center;
             width: 90%;
-            max-width: 50vw;
+            max-width: 50rem;
         }
 
         .search-input {
-            height: 6vw;
-            width: 90%;
+            height: 6rem;
+            width: 25rem;
             flex-grow: 1;
-            padding: 1vw;
-            border-radius: 2.8vw;
+            padding: 2rem 1rem;
+            border-radius: 2.8rem;
         }
 
         .search-input input {
-            width: 100%;
+            width: 69rem;
             border: none;
             background: transparent;
-            font-size: 2.2vw;
+            font-size: 2.2rem;
             color: black;
             outline: none;
             font-family: monospace;
@@ -100,26 +99,27 @@
         }
 
         .search-button {
-            padding: 1vw 2vw;
-            border-radius: 1.8vw;
+            padding: 1rem 2rem;
+            border-radius: 1.8rem;
         }
 
         .search-button,
         .search-button>div {
-            border-radius: 1.8vw;
-            margin: 0.05vw 0.25vw;
+            border-radius: 20px;
+            /* width: 5rem; */
+            margin: 1px 5px;
         }
 
         .search-button:hover {
-            padding: 1vw 1.8vw;
+            padding: 1rem 1.8rem;
         }
 
         .search-button:hover>div {
-            border-radius: 2vw;
+            border-radius: 2rem;
         }
 
         .search-button .liquidGlass-text {
-            font-size: 1.2vw;
+            font-size: 1.2rem;
             text-align: center;
         }
 
@@ -134,79 +134,22 @@
         }
 
         .pos {
+            /* border: 1px solid black; */
             display: flex;
             justify-content: flex-end;
-            width: 100%;
+            width: 27rem;
+
         }
 
         .pos2 {
             justify-content: flex-start;
-            width: 100%;
+            width: 27rem;
+
+
         }
 
         .button1 {
-            padding: 0.5vw 2vw;
-        }
-
-        /* Media Queries for Mobile */
-        @media screen and (max-width: 768px) {
-            .liquidGlass-text {
-                font-size: 3.5vw;
-            }
-
-            .search-input {
-                height: 8vw;
-                padding: 2vw;
-                border-radius: 3vw;
-            }
-
-            .search-input input {
-                font-size: 3.5vw;
-            }
-
-            .search-button {
-                padding: 1.5vw 3vw;
-                border-radius: 2.5vw;
-            }
-
-            .search-button .liquidGlass-text {
-                font-size: 2.5vw;
-            }
-
-            .wrapper {
-                max-width: 90vw;
-                gap: 1vw;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .liquidGlass-text {
-                font-size: 4vw;
-            }
-
-            .search-input {
-                height: 10vw;
-                padding: 3vw;
-                border-radius: 3.5vw;
-            }
-
-            .search-input input {
-                font-size: 4vw;
-            }
-
-            .search-button {
-                padding: 2vw 4vw;
-                border-radius: 3vw;
-            }
-
-            .search-button .liquidGlass-text {
-                font-size: 3vw;
-            }
-
-            .wrapper {
-                max-width: 95vw;
-                gap: 1.5vw;
-            }
+            padding: 0.5rem 2rem;
         }
     </style>
 </head>
@@ -218,13 +161,17 @@
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
                 <div class="liquidGlass-shine"></div>
-                <div class="liquidGlass-text">How Help</div>
+                <div class="liquidGlass-text">How Help
+
+                </div>
             </div>
             <div class="liquidGlass-wrapper search-button">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
                 <div class="liquidGlass-shine"></div>
-                <div class="liquidGlass-text">DO Experiment</div>
+                <div class="liquidGlass-text">DO Experiment
+
+                </div>
             </div>
         </div>
         <div class="liquidGlass-wrapper search-input">
@@ -240,9 +187,13 @@
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
                 <div class="liquidGlass-shine"></div>
-                <div class="liquidGlass-text">GO</div>
+                <div class="liquidGlass-text ">GO
+
+                </div>
             </div>
         </div>
+
+
     </div>
 
     <svg style="display: none">
