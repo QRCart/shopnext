@@ -107,6 +107,7 @@
         .search-button {
             padding: 0.1rem 0.5rem;
             border-radius: 1.8rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .search-button,
@@ -117,17 +118,20 @@
             /* margin: 1px 5px; */
         }
 
-        /* .search-button:hover {
-            padding: 1rem 1.8rem;
-        } */
-
-        /* .search-button:hover>div {
-            border-radius: 2rem;
-        } */
-
         .search-button .liquidGlass-text {
             /* font-size: 1.2rem; */
             text-align: center;
+        }
+
+        /* HOVER EFFECT FOR BUTTONS */
+        .search-button:hover {
+            transform: scale(1.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Optional: Add a slight bounce effect */
+        .search-button:active {
+            transform: scale(1.1);
         }
 
         @keyframes moveBackground {
