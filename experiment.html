@@ -389,6 +389,22 @@
       const shots = 4 + Math.floor(Math.random() * 3); // 4-6 shots
       let shotCount = 0;
       
+      // Shake only once at the beginning
+      body.classList.add('shake');
+      setTimeout(() => body.classList.remove('shake'), 200);
+      
+      // Gun barrel smoke only once at the beginning
+      const triggerRect = trigger.getBoundingClientRect();
+      const longSmoke = document.createElement('div');
+      longSmoke.classList.add('long-smoke');
+      longSmoke.style.left = `${triggerRect.left + triggerRect.width / 2 - 12}px`;
+      longSmoke.style.top = `${triggerRect.top - 20 + window.scrollY}px`;
+      body.appendChild(longSmoke);
+      
+      setTimeout(() => {
+        longSmoke.remove();
+      }, 4000);
+      
       const fireInterval = setInterval(() => {
         if (shotCount >= shots) {
           clearInterval(fireInterval);
@@ -399,13 +415,13 @@
         sound.currentTime = 0;
         sound.play().catch(() => {}); // Ignore audio errors on autoplay
         
-        const left = Math.random() * (window.innerWidth - 6);
+        const left = Math.random() * (window.innerWidth - 10);
         const top = Math.random() * (window.innerHeight - 86);
         
         const hole = document.createElement('div');
         hole.classList.add('bullet-hole');
-        hole.style.width = '6px';
-        hole.style.height = '6px';
+        hole.style.width = '10px';
+        hole.style.height = '10px';
         hole.style.left = `${left}px`;
         hole.style.top = `${top}px`;
         body.appendChild(hole);
@@ -429,21 +445,10 @@
         spark.style.top = `${top + 2}px`;
         body.appendChild(spark);
         
-        const triggerRect = trigger.getBoundingClientRect();
-        const longSmoke = document.createElement('div');
-        longSmoke.classList.add('long-smoke');
-        longSmoke.style.left = `${triggerRect.left + triggerRect.width / 2 - 12}px`;
-        longSmoke.style.top = `${triggerRect.top - 20 + window.scrollY}px`;
-        body.appendChild(longSmoke);
-        
         setTimeout(() => {
           smoke.remove();
           spark.remove();
         }, 1500);
-        
-        setTimeout(() => {
-          longSmoke.remove();
-        }, 4000);
         
         shotCount++;
       }, 500); // Half second interval
