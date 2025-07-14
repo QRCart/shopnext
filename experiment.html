@@ -182,14 +182,14 @@
             margin: 1px 9px;
         }
 
-        /* Result display */
+        /* Result display - MOVED TO TOP */
         .result-container {
-            position: absolute;
-            top: -34rem;
+            position: fixed;
+            top: 2rem;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 50rem;
+            max-width: 20rem;
             padding: 2rem;
             border-radius: 2rem;
             background: rgba(255, 255, 255, 0.1);
@@ -300,6 +300,11 @@
 </head>
 
 <body>
+    <!-- Result container at the top -->
+    <div class="result-container" id="resultContainer">
+        <div id="resultContent"></div>
+    </div>
+
     <!-- Background content area -->
     <div class="page">
         <div class="wrapper">
@@ -331,10 +336,6 @@
                     </div>
 
                 </div>
-            </div>
-
-            <div class="result-container" id="resultContainer">
-                <div id="resultContent"></div>
             </div>
         </div>
     </div>
@@ -502,12 +503,8 @@
         }
 
         function displayResult(answer, question) {
-            const title = isControlledExperimentMode ?
-                `` :
-                ``;
 
             resultContent.innerHTML = `
-                <h3>${title}</h3>
                 <div>${answer.replace(/\n/g, '<br>')}</div>
             `;
         }
@@ -548,7 +545,7 @@
 
         // Reset functionality
         document.addEventListener('click', function (e) {
-            if (!e.target.closest('.wrapper')) {
+            if (!e.target.closest('.wrapper') && !e.target.closest('.result-container')) {
                 // Reset state if clicking outside
                 isControlledExperimentMode = false;
                 controlledExperimentBtn.classList.remove('active');
