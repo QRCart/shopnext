@@ -67,6 +67,8 @@
             background-size: 500px;
             animation: moveBackground 60s linear infinite;
             flex-direction: row;
+            align-items: center;
+
         }
 
         .wrapper {
@@ -81,11 +83,11 @@
         }
 
         .search-input {
-            height: 6rem;
-            width: 22rem;
+            height: 4rem;
+            width: 20rem;
             flex-grow: 1;
-            padding: 2rem 1rem;
-            border-radius: 2.8rem;
+            padding: 1.5rem 2rem;
+            border-radius: 2rem;
         }
 
         .search-input input {
@@ -142,7 +144,7 @@
 
         .search-button.active:hover {
             transform: scale(1.3);
-             background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.5);
             box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(2px);
         }
@@ -151,6 +153,7 @@
             from {
                 background-position: 0% 0%;
             }
+
             to {
                 background-position: 0% -500%;
             }
@@ -159,12 +162,12 @@
         .pos {
             display: flex;
             justify-content: flex-end;
-            width: 24rem;
+            width: 28rem;
         }
 
         .pos2 {
             justify-content: flex-start;
-            width: 24rem;
+            width: 23rem;
         }
 
         .page {
@@ -182,7 +185,7 @@
         /* Result display */
         .result-container {
             position: absolute;
-            top: -35rem;
+            top: -19rem;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
@@ -197,7 +200,7 @@
             line-height: 1.6;
             display: none;
             z-index: 10;
-            max-height: 20rem;
+            max-height: 13rem;
             overflow-y: auto;
         }
 
@@ -262,37 +265,38 @@
 
 
         .liquidGlass-text {
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: stretch;  /* Allow textarea to stretch */
-  justify-content: stretch;
-}
-.search-input textarea {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  color: white;
-  outline: none;
-  font-family: 'Noto Sans', sans-serif;
-  resize: none;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  box-sizing: border-box;
-  /* padding: 1.5rem 1rem;  mimic input padding */
-}
-.search-button .liquidGlass-text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
+            z-index: 3;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: stretch;
+            /* Allow textarea to stretch */
+            justify-content: stretch;
+        }
 
+        .search-input textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            color: white;
+            outline: none;
+            font-family: 'Noto Sans', sans-serif;
+            resize: none;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+            /* padding: 1.5rem 1rem;  mimic input padding */
+        }
 
+        .search-button .liquidGlass-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
@@ -322,13 +326,13 @@
                 <div class="liquidGlass-tint"></div>
                 <div class="liquidGlass-shine"></div>
                 <div class="liquidGlass-text">
-<div class="liquidGlass-text search-textarea-wrapper">
-  <textarea id="searchInput" placeholder=""></textarea>
-</div>
+                    <div class="liquidGlass-text search-textarea-wrapper">
+                        <textarea id="searchInput" placeholder=""></textarea>
+                    </div>
 
                 </div>
             </div>
-            
+
             <div class="result-container" id="resultContainer">
                 <div id="resultContent"></div>
             </div>
@@ -355,14 +359,14 @@
 
     <script>
         window.addEventListener('load', function () {
-    // Existing API key check
-    if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-        console.warn('⚠️ API key not configured. Please replace YOUR_API_KEY_HERE with your actual Gemini API key.');
-    }
+            // Existing API key check
+            if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
+                console.warn('⚠️ API key not configured. Please replace YOUR_API_KEY_HERE with your actual Gemini API key.');
+            }
 
-    // ✅ Focus the textarea so the cursor appears on page load
-    searchInput.focus();
-});
+            // ✅ Focus the textarea so the cursor appears on page load
+            searchInput.focus();
+        });
 
         // Configuration - REPLACE WITH YOUR ACTUAL API KEY
         const GEMINI_API_KEY = 'AIzaSyCN1LNQGg_0QMev6tasgwC6iVDyEB8OK9o'; // ⚠️ Replace this with your actual API key
@@ -380,9 +384,9 @@
         const resultContent = document.getElementById('resultContent');
 
         // Button click handlers
-        controlledExperimentBtn.addEventListener('click', function() {
+        controlledExperimentBtn.addEventListener('click', function () {
             isControlledExperimentMode = !isControlledExperimentMode;
-            
+
             if (isControlledExperimentMode) {
                 this.classList.add('active');
                 searchInput.placeholder = "";
@@ -392,7 +396,7 @@
             }
         });
 
-        secondBtn.addEventListener('click', function() {
+        secondBtn.addEventListener('click', function () {
             debugMode = !debugMode;
             if (debugMode) {
                 this.classList.add('active');
@@ -404,7 +408,7 @@
         });
 
         // Search functionality
-        searchInput.addEventListener('keypress', function(e) {
+        searchInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 handleSearch();
             }
@@ -418,7 +422,7 @@
 
         async function handleSearch() {
             const userQuestion = searchInput.value.trim();
-            
+
             if (!userQuestion) {
                 alert('Please enter a question');
                 return;
@@ -483,11 +487,11 @@
 
                 const data = JSON.parse(responseText);
                 logDebug('Parsed response', data);
-                
+
                 // Check for different response structures
                 if (data.candidates && data.candidates.length > 0) {
                     const candidate = data.candidates[0];
-                    
+
                     if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
                         const answer = candidate.content.parts[0].text;
                         displayResult(answer, userQuestion);
@@ -510,10 +514,10 @@
         }
 
         function displayResult(answer, question) {
-            const title = isControlledExperimentMode ? 
-                `` : 
+            const title = isControlledExperimentMode ?
+                `` :
                 ``;
-            
+
             resultContent.innerHTML = `
                 <h3>${title}</h3>
                 <div>${answer.replace(/\n/g, '<br>')}</div>
@@ -522,7 +526,7 @@
 
         function displayError(errorMessage, fullError = null) {
             let debugInfo = '';
-            
+
             if (debugMode && fullError) {
                 debugInfo = `
                     <div class="debug-info">
@@ -555,7 +559,7 @@
         }
 
         // Reset functionality
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!e.target.closest('.wrapper')) {
                 // Reset state if clicking outside
                 isControlledExperimentMode = false;
@@ -566,7 +570,7 @@
         });
 
         // Test API key on page load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
                 console.warn('⚠️ API key not configured. Please replace YOUR_API_KEY_HERE with your actual Gemini API key.');
             }
