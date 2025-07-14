@@ -37,8 +37,8 @@
       align-items: center;
       background: #222;
       border-radius: 30px;
-      padding: 8px 10px;
-      width: 100%;
+      padding: 10px;
+      width: 90%;
       max-width: 400px;
       position: fixed;
       bottom: 20px;
@@ -49,7 +49,7 @@
 
     .bullet-input {
       flex: 1;
-      padding: 10px 15px;
+      padding: 10px 20px;
       border: none;
       outline: none;
       background: #333;
@@ -69,9 +69,9 @@
       color: #111;
       border: none;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      margin-left: 8px;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
       cursor: pointer;
       font-weight: bold;
       transition: transform 0.1s;
@@ -88,6 +88,18 @@
 
     .fired {
       transform: translateX(-10px);
+    }
+
+    .shake {
+      animation: shake 0.2s;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-5px, 5px); }
+      50% { transform: translate(5px, -5px); }
+      75% { transform: translate(-5px, 5px); }
+      100% { transform: translate(0, 0); }
     }
 
     .smoke {
@@ -133,6 +145,8 @@
 </head>
 <body>
 
+  <audio id="gunshot-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_6aebdce69c.mp3" preload="auto"></audio>
+
   <div class="gun-container" id="gun">
     <input type="text" class="bullet-input" placeholder="Solve your Problem:" id="input">
     <button class="trigger-button" id="trigger"></button>
@@ -143,6 +157,7 @@
     const gun = document.getElementById('gun');
     const input = document.getElementById('input');
     const body = document.querySelector('body');
+    const sound = document.getElementById('gunshot-sound');
 
     function addBackgroundBulletHoles(count) {
       for (let i = 0; i < count; i++) {
@@ -158,6 +173,15 @@
 
     trigger.addEventListener('click', () => {
       gun.classList.add('fired');
+      sound.currentTime = 0;
+      sound.play();
+
+      body.classList.add('shake');
+      setTimeout(() => body.classList.remove('shake'), 200);
+
+      if (window.navigator.vibrate) {
+        window.navigator.vibrate(100);
+      }
 
       const smoke = document.createElement('div');
       smoke.classList.add('smoke');
@@ -177,9 +201,9 @@
 
     input.addEventListener('input', () => {
       if (input.value.length > 0) {
-        input.style.paddingLeft = '25px';
+        input.style.paddingLeft = '30px';
       } else {
-        input.style.paddingLeft = '15px';
+        input.style.paddingLeft = '20px';
       }
     });
   </script>
