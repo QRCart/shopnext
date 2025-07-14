@@ -1,188 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Modi College AI</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bar with Liquid Glass Effect</title>
+    <style>
+        /* LIQUID GLASS STYLES */
+        .liquidGlass-wrapper {
+            position: relative;
+            display: flex;
+            font-weight: 600;
+            overflow: hidden;
+            color: black;
+            cursor: pointer;
+            box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+        }
 
-    body {
-      margin: 0;
-      padding: 0 10px 20px;
-      height: 100vh;
-      background: #111;
-      font-family: 'Share Tech Mono', monospace;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
+        .liquidGlass-effect {
+            position: absolute;
+            z-index: 0;
+            inset: 0;
+            backdrop-filter: blur(3px);
+            filter: url(#glass-distortion);
+            overflow: hidden;
+            isolation: isolate;
+        }
 
-    .gun-container {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-radius: 20px;
-      padding: 12px;
-      width: 95%;
-      max-width: 600px;
-      position: fixed;
-      bottom: 20px;
-      z-index: 2;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      transition: transform 0.1s ease;
-    }
+        .liquidGlass-tint {
+            z-index: 1;
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.25);
+        }
 
-    .search-tabs {
-      position: absolute;
-      top: -35px;
-      left: 15px;
-      display: flex;
-      gap: 8px;
-    }
+        .liquidGlass-shine {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
+                inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5);
+        }
 
-    .search-tab {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #eee;
-      padding: 6px 12px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
+        .liquidGlass-text {
+            z-index: 3;
+            font-size: 2rem;
+            color: black;
+            /* border: 1px solid black; */
+        }
 
-    .search-tab:hover {
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
+        /* OTHER STYLES */
+        body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 100vh;
+            background: url("https://raw.githubusercontent.com/lucasromerodb/liquid-glass-effect-macos/refs/heads/main/assets/flowers.jpg") center center;
+            background-size: 500px;
+            font-family: sans-serif;
+            font-weight: 300;
+            animation: moveBackground 60s linear infinite;
+        }
 
-    .search-tab.active {
-      background: rgba(255, 255, 255, 0.25);
-      color: #fff;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.3);
-    }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 50rem;
+        }
 
-    .search-tab.active::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
-      pointer-events: none;
-    }
+        .search-input {
+            height: 6rem;
+            width: 70rem;
+            flex-grow: 1;
+            padding: 2rem 1rem;
+            border-radius: 2.8rem;
+        }
 
-    .bullet-input {
-      flex: 1;
-      padding: 14px 22px;
-      border: none;
-      outline: none;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      color: #fff;
-      border-radius: 18px;
-      font-size: 1.1rem;
-      font-family: 'Share Tech Mono', monospace;
-      transition: 0.3s;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        .search-input input {
+            width: 69rem;
+            border: none;
+            background: transparent;
+            font-size: 2.2rem;
+            color: black;
+            outline: none;
+            font-family: monospace;
+        }
 
-    .bullet-input:focus {
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
-                  0 0 0 2px rgba(255, 255, 255, 0.1);
-    }
+        .search-input input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
 
-    .bullet-input::placeholder {
-      color: #ccc;
-      transition: 0.3s;
-    }
+        .search-button {
+            padding: 1rem 2rem;
+            border-radius: 1.8rem;
+        }
 
-    .bullet-input:focus::placeholder {
-      color: #eee;
-    }
+        .search-button,
+        .search-button>div {
+            border-radius: 20px;
+            /* width: 5rem; */
+            margin: 1px 5px;
+        }
 
-    .trigger-button {
-      background: rgba(255, 255, 255, 0.6);
-      color: #111;
-      border: none;
-      border-radius: 50%;
-      width: 46px;
-      height: 46px;
-      margin-left: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1.2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      animation: spin 2s linear infinite;
-    }
+        .search-button:hover {
+            padding: 1rem 1.8rem;
+        }
 
-    .trigger-button:hover {
-      background: rgba(255, 255, 255, 0.75);
-      transform: translateY(-1px);
-    }
+        .search-button:hover>div {
+            border-radius: 2rem;
+        }
 
-    .trigger-button:active {
-      transform: scale(0.95);
-    }
+        .search-button .liquidGlass-text {
+            font-size: 1.2rem;
+            text-align: center;
+        }
 
-    @keyframes spin {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+        @keyframes moveBackground {
+            from {
+                background-position: 0% 0%;
+            }
+
+            to {
+                background-position: 0% -500%;
+            }
+        }
+
+        .pos {
+            /* border: 1px solid black; */
+            display: flex;
+            justify-content: flex-end;
+            width: 72rem;
+
+        }
+
+        .pos2 {
+            justify-content: flex-start;
+            width: 70rem;
+
+
+        }
+
+        .button1 {
+            padding: 0.5rem 2rem;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            body {
+                background-size: 250px;
+            }
+            
+            .wrapper {
+                transform: scale(0.5);
+                transform-origin: center;
+                width: 180%;
+                max-width: 100rem;
+            }
+            
+            .liquidGlass-shine {
+                box-shadow: inset 1px 1px 0.5px 0 rgba(255, 255, 255, 0.5),
+                    inset -0.5px -0.5px 0.5px 0.5px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                background-size: 200px;
+            }
+            
+            .wrapper {
+                transform: scale(0.35);
+                transform-origin: center;
+                width: 260%;
+                max-width: 140rem;
+            }
+            
+            .liquidGlass-shine {
+                box-shadow: inset 0.7px 0.7px 0.35px 0 rgba(255, 255, 255, 0.5),
+                    inset -0.35px -0.35px 0.35px 0.35px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                background-size: 150px;
+            }
+            
+            .wrapper {
+                transform: scale(0.28);
+                transform-origin: center;
+                width: 320%;
+                max-width: 180rem;
+            }
+            
+            .liquidGlass-shine {
+                box-shadow: inset 0.56px 0.56px 0.28px 0 rgba(255, 255, 255, 0.5),
+                    inset -0.28px -0.28px 0.28px 0.28px rgba(255, 255, 255, 0.5);
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="gun-container" id="gun">
-    <div class="search-tabs">
-      <div class="search-tab active" data-placeholder="How will you change the world?">How will</div>
-      <div class="search-tab" data-placeholder="What experiment should we try?">Do Experiment</div>
-      <div class="search-tab" data-placeholder="What's on your mind?">Ask question</div>
+    <div class="wrapper">
+        <div class="pos pos2">
+            <div class="liquidGlass-wrapper search-button">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+                <div class="liquidGlass-text">How Help
+
+                </div>
+            </div>
+            <div class="liquidGlass-wrapper search-button">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+                <div class="liquidGlass-text">DO Experiment
+
+                </div>
+            </div>
+        </div>
+        <div class="liquidGlass-wrapper search-input">
+            <div class="liquidGlass-effect"></div>
+            <div class="liquidGlass-tint"></div>
+            <div class="liquidGlass-shine"></div>
+            <div class="liquidGlass-text">
+                <input type="text" placeholder="">
+            </div>
+        </div>
+        <div class="pos">
+            <div class="liquidGlass-wrapper search-button">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+                <div class="liquidGlass-text ">GO
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
-    <input type="text" class="bullet-input" id="input" placeholder="">
-    <button class="trigger-button" id="trigger"></button>
-  </div>
 
-  <script>
-    const trigger = document.getElementById('trigger');
-    const input = document.getElementById('input');
-    const tabs = document.querySelectorAll('.search-tab');
-
-    tabs.forEach(tab => tab.onclick = () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      input.placeholder = tab.dataset.placeholder;
-      input.value = '';
-      input.focus();
-      input.style.paddingLeft = '22px';
-    });
-
-    input.oninput = () => {
-      input.style.paddingLeft = input.value.length > 0 ? '26px' : '22px';
-    };
-  </script>
+    <svg style="display: none">
+        <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence" />
+            <feComponentTransfer in="turbulence" result="mapped">
+                <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+                <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+                <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+            </feComponentTransfer>
+            <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+            <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100"
+                lighting-color="white" result="specLight">
+                <fePointLight x="-200" y="-200" z="300" />
+            </feSpecularLighting>
+            <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
+            <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
 </body>
+
 </html>
