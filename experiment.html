@@ -40,8 +40,6 @@
     .background-bullet-hole,
     .bullet-hole {
       position: absolute;
-      width: 6px;
-      height: 6px;
       background-color: #000;
       border: 1px solid #444;
       border-radius: 50%;
@@ -133,11 +131,25 @@
     }
 
     @keyframes shake {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(-4px, 4px); }
-      50% { transform: translate(4px, -4px); }
-      75% { transform: translate(-4px, 4px); }
-      100% { transform: translate(0, 0); }
+      0% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(-4px, 4px);
+      }
+
+      50% {
+        transform: translate(4px, -4px);
+      }
+
+      75% {
+        transform: translate(-4px, 4px);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
     }
 
     .smoke {
@@ -165,21 +177,42 @@
     }
 
     @keyframes smoke {
-      0% { transform: translateY(0) scale(1); opacity: 0.6; }
-      50% { transform: translateY(-20px) scale(1.2); opacity: 0.3; }
-      100% { transform: translateY(-40px) scale(1.5); opacity: 0; }
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translateY(-20px) scale(1.2);
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: translateY(-40px) scale(1.5);
+        opacity: 0;
+      }
     }
 
     @keyframes longSmoke {
-      0% { transform: translateY(0) scale(1); opacity: 0.5; }
-      50% { transform: translateY(-50px) scale(1.5); opacity: 0.3; }
-      100% { transform: translateY(-120px) scale(2.5); opacity: 0; }
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: translateY(-50px) scale(1.5);
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: translateY(-120px) scale(2.5);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 
 <body>
-
 
   <audio id="gunshot-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_6aebdce69c.mp3" preload="auto"></audio>
 
@@ -188,10 +221,9 @@
       <div class="search-tab">How will</div>
       <div class="search-tab">Do Experiment</div>
       <div class="search-tab">Ask question</div>
-
     </div>
     <input type="text" class="bullet-input" id="input">
-    <button class="trigger-button" id="trigger">→</button>
+    <button class="trigger-button" id="trigger"></button>
   </div>
 
   <script>
@@ -205,6 +237,9 @@
       for (let i = 0; i < count; i++) {
         const hole = document.createElement('div');
         hole.classList.add('background-bullet-hole');
+        const size = Math.random() * 3 + 4; // Random size between 4px and 7px
+        hole.style.width = `${size}px`;
+        hole.style.height = `${size}px`;
         hole.style.left = `${Math.random() * window.innerWidth}px`;
         hole.style.top = `${Math.random() * window.innerHeight}px`;
         body.appendChild(hole);
@@ -230,6 +265,8 @@
 
       const hole = document.createElement('div');
       hole.classList.add('bullet-hole');
+      hole.style.width = '6px';
+      hole.style.height = '6px';
       hole.style.left = `${left}px`;
       hole.style.top = `${top}px`;
       body.appendChild(hole);
