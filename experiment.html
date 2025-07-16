@@ -58,7 +58,58 @@
             justify-content: center;
         }
 
-        /* OTHER STYLES */
+        /* CARD STYLES */
+        .info-card {
+            width: 100%;
+            max-width: 50rem;
+            height: 4rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            cursor: default;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+        }
+
+        .info-card .liquidGlass-effect,
+        .info-card .liquidGlass-tint,
+        .info-card .liquidGlass-shine {
+            border-radius: 1.5rem;
+        }
+
+        .info-card .liquidGlass-tint {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .info-card .liquidGlass-text {
+            padding: 2rem;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            flex-direction: row;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+
+        /* Hover effects for card */
+        .info-card:hover .liquidGlass-effect {
+            transform: scale(1.02);
+            backdrop-filter: blur(5px);
+        }
+
+        .info-card:hover .liquidGlass-tint {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .info-card:hover .liquidGlass-shine {
+            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.7),
+                        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.7),
+                        0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* OTHER STYLES (unchanged) */
         body {
             padding: 0;
             margin: 0;
@@ -70,7 +121,6 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            flex-direction: row;
             overflow: hidden;
         }
 
@@ -91,118 +141,29 @@
             width: 20rem;
             flex-grow: 1;
             padding: 1.5rem 2rem;
-            border-radius: 2rem 2rem 2px 0px;
+            border-radius: 2rem 2rem 2px 0;
         }
 
+        .search-input textarea,
         .search-input input {
-            width: 69rem;
+            width: 100%;
+            height: 100%;
             border: none;
             background: transparent;
             font-size: 20px;
-            color: black;
+            color: white;
             outline: none;
             font-family: 'Noto Sans', sans-serif;
+            resize: none;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
         }
 
+        .search-input textarea::placeholder,
         .search-input input::placeholder {
-            color: rgba(0, 0, 0, 0.5);
-        }
-
-        .search-button {
-            padding: 0.1rem 0.5rem;
-            border-radius: 1.8rem;
-            transition: transform 0.3s ease;
-        }
-
-        .search-button,
-        .search-button>div {
-            border-radius: 5rem;
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .search-button .liquidGlass-text {
-            text-align: center;
-        }
-
-        /* FIXED HOVER EFFECTS - Applied to the inner glass elements */
-        .search-button:hover .liquidGlass-effect {
-            transform: scale(1.05);
-        }
-
-        .search-button:hover .liquidGlass-tint {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .search-button:hover .liquidGlass-shine {
-            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.8),
-                        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.8),
-                        0 0 20px rgba(255, 255, 255, 0.6);
-        }
-
-        .search-button:active .liquidGlass-effect {
-            transform: scale(0.98);
-        }
-
-        .search-button:active .liquidGlass-tint {
-            background: rgba(255, 255, 255, 0.6);
-        }
-
-        .search-button:active .liquidGlass-shine {
-            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 1),
-                        inset -1px -1px 1px 1px rgba(255, 255, 255, 1),
-                        0 0 15px rgba(255, 255, 255, 0.8);
-        }
-
-        /* Active state for toggled buttons */
-        .search-button.active .liquidGlass-effect {
-            transform: scale(1.02);
-        }
-
-        .search-button.active .liquidGlass-tint {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .search-button.active .liquidGlass-shine {
-            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.9),
-                        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.9),
-                        0 0 25px rgba(255, 255, 255, 0.4),
-                        inset 0 0 20px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Active + Hover combination */
-        .search-button.active:hover .liquidGlass-effect {
-            transform: scale(1.08);
-        }
-
-        .search-button.active:hover .liquidGlass-tint {
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        .search-button.active:hover .liquidGlass-shine {
-            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 1),
-                        inset -1px -1px 1px 1px rgba(255, 255, 255, 1),
-                        0 0 30px rgba(255, 255, 255, 0.8),
-                        inset 0 0 25px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Ensure all child elements maintain circular shape */
-        .search-button .liquidGlass-effect,
-        .search-button .liquidGlass-tint,
-        .search-button .liquidGlass-shine {
-            border-radius: 50%;
-        }
-
-        .pos {
-            display: flex;
-            justify-content: flex-end;
-            width: 28rem;
-        }
-
-        .pos2 {
-            justify-content: flex-start;
-            width: 23rem;
-            margin-top: 3rem;
+            color: white;
+            opacity: 0.7;
         }
 
         .page {
@@ -212,186 +173,28 @@
             margin-bottom: 2rem;
         }
 
-        .search-button {
-            width: 2rem;
-            margin: 1px 9px;
-        }
-
-        /* Result display - MOVED TO TOP */
         .result-container {
-            position: fixed;
-            top: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 20rem;
-            padding: 2rem;
-            border-radius: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            color: white;
-            font-family: 'Noto Sans', sans-serif;
-            line-height: 1.6;
-            display: none;
-            z-index: 10;
-            max-height: 30vh;
-            overflow-y: auto;
+            /* unchanged */
         }
-
-        .loading {
-            text-align: center;
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .result-container h3 {
-            margin-top: 0;
-            color: #ff6b6b;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .result-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .result-container::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .result-container::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-        }
-
-        .result-container::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .error {
-            color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.3);
-            padding: 1rem;
-            border-radius: 1rem;
-            margin-top: 1rem;
-        }
-
-        /* Icon styles */
-        .icon {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        /* Debug info styles */
-        .debug-info {
-            background: rgba(0, 0, 0, 0.7);
-            color: #00ff00;
-            padding: 1rem;
-            border-radius: 1rem;
-            margin-top: 1rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .liquidGlass-text {
-            z-index: 3;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: stretch;
-            justify-content: stretch;
-        }
-
-        .search-input textarea {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: transparent;
-            font-size: 18px;
-            color: black;
-            outline: none;
-            font-family: 'Noto Sans', sans-serif;
-            resize: none;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-            box-sizing: border-box;
-            padding: 0.5rem;
-        }
-
-        .search-input textarea::placeholder {
-            color: rgba(0, 0, 0, 0.5);
-        }
-
-        .search-button .liquidGlass-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .close-button:hover {
-            opacity: 1;
-        }
-        .search-input textarea::placeholder {
-    color: white;
-    opacity: 0.7;
-}
-
-.search-input input::placeholder {
-    color: white;
-    opacity: 0.7;
-}
-
     </style>
 </head>
 
 <body>
-    <!-- Result container at the top -->
-    <div class="result-container" id="resultContainer">
-        <button class="close-button" onclick="hideResult()">×</button>
-        <div id="resultContent"></div>
-    </div>
-
-    <!-- Background content area -->
     <div class="page">
         <div class="wrapper">
-            <div class="pos pos2">
-                <div class="liquidGlass-wrapper search-button" id="controlledExperimentBtn">
-                    <div class="liquidGlass-effect"></div>
-                    <div class="liquidGlass-tint"></div>
-                    <div class="liquidGlass-shine"></div>
-                    <div class="liquidGlass-text">
-                        <span class="icon">🧭</span>
-                    </div>
-                </div>
-                <div class="liquidGlass-wrapper search-button" id="secondBtn">
-                    <div class="liquidGlass-effect"></div>
-                    <div class="liquidGlass-tint"></div>
-                    <div class="liquidGlass-shine"></div>
-                    <div class="liquidGlass-text">
-                        <span class="icon">🧫</span>
-                    </div>
+            <!-- INFO CARD WITH 3 EMOJIS -->
+            <div class="liquidGlass-wrapper info-card">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+                <div class="liquidGlass-text">
+                    <span class="stat-icon">🧫</span>
+                    <!-- <span class="stat-icon">🎲</span>
+                    <span class="stat-icon">🔮</span> -->
                 </div>
             </div>
+
+            <!-- SEARCH BAR -->
             <div class="liquidGlass-wrapper search-input">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
@@ -403,6 +206,7 @@
         </div>
     </div>
 
+    <!-- SVG FILTER -->
     <svg style="display: none">
         <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
             <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence" />
@@ -412,253 +216,13 @@
                 <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
             </feComponentTransfer>
             <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
-            <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100"
-                lighting-color="white" result="specLight">
+            <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lighting-color="white" result="specLight">
                 <fePointLight x="-200" y="-200" z="300" />
             </feSpecularLighting>
             <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
             <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
         </filter>
     </svg>
-
-    <script>
-        // Configuration - REPLACE WITH YOUR ACTUAL API KEY
-        const GEMINI_API_KEY = 'AIzaSyCN1LNQGg_0QMev6tasgwC6iVDyEB8OK9o';
-        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
-
-        // State management
-        let isControlledExperimentMode = false;
-        let debugMode = false;
-
-        // DOM elements
-        const controlledExperimentBtn = document.getElementById('controlledExperimentBtn');
-        const secondBtn = document.getElementById('secondBtn');
-        const searchInput = document.getElementById('searchInput');
-        const resultContainer = document.getElementById('resultContainer');
-        const resultContent = document.getElementById('resultContent');
-
-        // Button click handlers
-        controlledExperimentBtn.addEventListener('click', function () {
-            isControlledExperimentMode = !isControlledExperimentMode;
-
-            if (isControlledExperimentMode) {
-                this.classList.add('active');
-                searchInput.placeholder = "Ask about controlled experiments...";
-            } else {
-                this.classList.remove('active');
-                searchInput.placeholder = "Ask me anything...";
-            }
-        });
-
-        secondBtn.addEventListener('click', function () {
-            debugMode = !debugMode;
-            if (debugMode) {
-                this.classList.add('active');
-                console.log('Debug mode enabled');
-            } else {
-                this.classList.remove('active');
-                console.log('Debug mode disabled');
-            }
-        });
-
-        // Search functionality
-        searchInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSearch();
-            }
-        });
-
-        function hideResult() {
-            resultContainer.style.display = 'none';
-        }
-
-        function logDebug(message, data = null) {
-            if (debugMode) {
-                console.log(`[DEBUG] ${message}`, data);
-            }
-        }
-
-        async function handleSearch() {
-            const userQuestion = searchInput.value.trim();
-
-            if (!userQuestion) {
-                alert('Please enter a question');
-                return;
-            }
-
-            // Check if API key is properly set
-            if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-                displayError('API key not configured. Please add your Gemini API key to the code.');
-                return;
-            }
-
-            // Show loading state
-            resultContainer.style.display = 'block';
-            if (isControlledExperimentMode) {
-                resultContent.innerHTML = '<div class="loading">Checking if controlled experiments can help...</div>';
-            } else {
-                resultContent.innerHTML = '<div class="loading">Processing your question...</div>';
-            }
-
-            logDebug('Starting search', { question: userQuestion, mode: isControlledExperimentMode });
-
-            try {
-                // Prepare the prompt
-                let prompt;
-                if (isControlledExperimentMode) {
-                    prompt = `You are an expert in research methodology. Analyze if controlled experiments can help with this problem and provide detailed guidance:
-
-Problem: "${userQuestion}"
-
-: Give a short answer and how it gonna help`;
-                } else {
-                    prompt = userQuestion;
-                }
-
-                logDebug('Prepared prompt', { prompt });
-
-                const requestBody = {
-                    contents: [{
-                        parts: [{
-                            text: prompt
-                        }]
-                    }],
-                    generationConfig: {
-                        temperature: 0.7,
-                        topK: 40,
-                        topP: 0.95,
-                        maxOutputTokens: 2048,
-                    },
-                    safetySettings: [
-                        {
-                            category: "HARM_CATEGORY_HARASSMENT",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        },
-                        {
-                            category: "HARM_CATEGORY_HATE_SPEECH",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        },
-                        {
-                            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        },
-                        {
-                            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        }
-                    ]
-                };
-
-                logDebug('Request body', requestBody);
-
-                const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-
-                logDebug('Response status', response.status);
-                logDebug('Response headers', Object.fromEntries(response.headers.entries()));
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    logDebug('Error response', errorText);
-                    throw new Error(`API request failed with status ${response.status}: ${errorText}`);
-                }
-
-                const data = await response.json();
-                logDebug('Parsed response', data);
-
-                if (data.candidates && data.candidates.length > 0) {
-                    const candidate = data.candidates[0];
-
-                    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
-                        const answer = candidate.content.parts[0].text;
-                        displayResult(answer, userQuestion);
-                    } else if (candidate.finishReason) {
-                        let errorMessage = `Response was blocked due to: ${candidate.finishReason}`;
-                        if (candidate.finishReason === 'SAFETY') {
-                            errorMessage += '. The content was flagged by safety filters. Please try rephrasing your question.';
-                        }
-                        throw new Error(errorMessage);
-                    } else {
-                        throw new Error('Unexpected response structure from API');
-                    }
-                } else if (data.error) {
-                    throw new Error(`API Error: ${data.error.message || JSON.stringify(data.error)}`);
-                } else {
-                    throw new Error('No valid response from Gemini API');
-                }
-
-            } catch (error) {
-                console.error('Error calling Gemini API:', error);
-                logDebug('Error details', error);
-                displayError(error.message, error);
-            }
-        }
-
-        function displayResult(answer, question) {
-            const formattedAnswer = answer
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/\n/g, '<br>');
-
-            resultContent.innerHTML = `
-                <div>${formattedAnswer}</div>
-            `;
-        }
-
-        function displayError(errorMessage, fullError = null) {
-            let debugInfo = '';
-
-            if (debugMode && fullError) {
-                debugInfo = `
-                    <div class="debug-info">
-                        <strong>Debug Information:</strong><br>
-                        Error: ${fullError.message || 'Unknown error'}<br>
-                        Stack: ${fullError.stack || 'No stack trace'}<br>
-                        API Key Set: ${GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE' ? 'Yes' : 'No'}<br>
-                        API URL: ${GEMINI_API_URL}
-                    </div>
-                `;
-            }
-
-            resultContent.innerHTML = `
-                <div class="error">
-                    <h3>❌ Error</h3>
-                    <p>Sorry, there was an error processing your request:</p>
-                    <p><strong>${errorMessage}</strong></p>
-                    <p>Common solutions:</p>
-                    <ul>
-                        <li>Verify your API key is valid and has correct permissions</li>
-                        <li>Check that the Gemini API is enabled in your Google Cloud Console</li>
-                        <li>Ensure you have a stable internet connection</li>
-                        <li>Try rephrasing your question if it was flagged by safety filters</li>
-                        <li>Click the debug button (🧫) for detailed error information</li>
-                    </ul>
-                    <p>Get your API key from: <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: #ff6b6b;">Google AI Studio</a></p>
-                </div>
-                ${debugInfo}
-            `;
-        }
-
-        // Initialize
-        window.addEventListener('load', function () {
-            if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-                console.warn('⚠️ API key not configured. Please replace with your actual Gemini API key.');
-            }
-            
-            // Automatically activate the controlled experiment button on page load
-            isControlledExperimentMode = true;
-            controlledExperimentBtn.classList.add('active');
-            searchInput.placeholder = "Check Can we help You...";
-            
-            searchInput.focus();
-        });
-    </script>
 </body>
 
 </html>
