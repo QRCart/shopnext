@@ -506,10 +506,18 @@
                 // Prepare the prompt
                 let prompt;
                 if (isControlledExperimentMode) {
-                    prompt = `You are an expert in research methodology. Analyze if controlled experiments can help with this problem:
+                    prompt = `You are an expert in research methodology. Analyze if controlled experiments can help with this problem and provide detailed guidance:
 
 Problem: "${userQuestion}"
-: Give a short Answer and how it can help`;
+
+Please provide:
+1. Whether controlled experiments are suitable for this problem
+2. How to design such experiments if applicable
+3. What variables to control
+4. Expected outcomes and limitations
+5. Alternative research methods if controlled experiments aren't suitable
+
+Be specific and practical in your response.`;
                 } else {
                     prompt = userQuestion;
                 }
@@ -649,6 +657,12 @@ Problem: "${userQuestion}"
             if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
                 console.warn('⚠️ API key not configured. Please replace with your actual Gemini API key.');
             }
+            
+            // Automatically activate the controlled experiment button on page load
+            isControlledExperimentMode = true;
+            controlledExperimentBtn.classList.add('active');
+            searchInput.placeholder = "Ask about controlled experiments...";
+            
             searchInput.focus();
         });
     </script>
