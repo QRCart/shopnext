@@ -28,6 +28,7 @@
             filter: url(#glass-distortion);
             overflow: hidden;
             isolation: isolate;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
         }
 
         .liquidGlass-tint {
@@ -35,6 +36,7 @@
             position: absolute;
             inset: 0;
             background: rgba(255, 255, 255, 0.25);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
         }
 
         .liquidGlass-shine {
@@ -44,6 +46,7 @@
             overflow: hidden;
             box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
                 inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
         }
 
         .liquidGlass-text {
@@ -104,60 +107,82 @@
             color: rgba(0, 0, 0, 0.5);
         }
 
-        /* FIXED CIRCULAR BUTTON STYLES */
         .search-button {
-            padding: 0;
-            margin: 1px 9px;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            border: 2px solid transparent;
+            padding: 0.1rem 0.5rem;
+            border-radius: 1.8rem;
+            transition: transform 0.3s ease;
         }
 
         .search-button,
-        .search-button > div {
-            border-radius: 50%;
+        .search-button>div {
+            border-radius: 5rem;
             width: 3rem;
             height: 3rem;
         }
 
         .search-button .liquidGlass-text {
             text-align: center;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* IMPROVED HOVER EFFECTS */
-        .search-button:hover {
-            transform: scale(1.1);
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 
-                        0 0 30px rgba(255, 255, 255, 0.2);
-        }
-
-        .search-button:active {
+        /* FIXED HOVER EFFECTS - Applied to the inner glass elements */
+        .search-button:hover .liquidGlass-effect {
             transform: scale(1.05);
-            border: 2px solid rgba(255, 255, 255, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
-        .search-button.active {
-            border: 2px solid rgba(255, 255, 255, 1);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4),
+        .search-button:hover .liquidGlass-tint {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-button:hover .liquidGlass-shine {
+            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.8),
+                        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.8),
+                        0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .search-button:active .liquidGlass-effect {
+            transform: scale(0.98);
+        }
+
+        .search-button:active .liquidGlass-tint {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-button:active .liquidGlass-shine {
+            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 1),
+                        inset -1px -1px 1px 1px rgba(255, 255, 255, 1),
+                        0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Active state for toggled buttons */
+        .search-button.active .liquidGlass-effect {
+            transform: scale(1.02);
+        }
+
+        .search-button.active .liquidGlass-tint {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-button.active .liquidGlass-shine {
+            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.9),
+                        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.9),
+                        0 0 25px rgba(255, 255, 255, 0.4),
                         inset 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
-        .search-button.active:hover {
-            transform: scale(1.15);
-            border: 2px solid rgba(255, 255, 255, 1);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 
-                        0 0 40px rgba(255, 255, 255, 0.3),
-                        inset 0 0 20px rgba(255, 255, 255, 0.1);
+        /* Active + Hover combination */
+        .search-button.active:hover .liquidGlass-effect {
+            transform: scale(1.08);
+        }
+
+        .search-button.active:hover .liquidGlass-tint {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-button.active:hover .liquidGlass-shine {
+            box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 1),
+                        inset -1px -1px 1px 1px rgba(255, 255, 255, 1),
+                        0 0 30px rgba(255, 255, 255, 0.8),
+                        inset 0 0 25px rgba(255, 255, 255, 0.2);
         }
 
         /* Ensure all child elements maintain circular shape */
@@ -196,6 +221,11 @@
             margin-bottom: 2rem;
         }
 
+        .search-button {
+            width: 2rem;
+            margin: 1px 9px;
+        }
+
         /* Result display - MOVED TO TOP */
         .result-container {
             position: fixed;
@@ -203,7 +233,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 20rem;
+            max-width: 50rem;
             padding: 2rem;
             border-radius: 2rem;
             background: rgba(255, 255, 255, 0.1);
@@ -214,7 +244,7 @@
             line-height: 1.6;
             display: none;
             z-index: 10;
-            max-height: 13rem;
+            max-height: 70vh;
             overflow-y: auto;
         }
 
@@ -292,13 +322,18 @@
             border: none;
             background: transparent;
             font-size: 18px;
-            color: white;
+            color: black;
             outline: none;
             font-family: 'Noto Sans', sans-serif;
             resize: none;
             white-space: pre-wrap;
             overflow-wrap: break-word;
             box-sizing: border-box;
+            padding: 0.5rem;
+        }
+
+        .search-input textarea::placeholder {
+            color: rgba(0, 0, 0, 0.5);
         }
 
         .search-button .liquidGlass-text {
@@ -308,12 +343,30 @@
             width: 100%;
             height: 100%;
         }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-button:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body>
     <!-- Result container at the top -->
     <div class="result-container" id="resultContainer">
+        <button class="close-button" onclick="hideResult()">×</button>
         <div id="resultContent"></div>
     </div>
 
@@ -337,24 +390,13 @@
                         <span class="icon">🧫</span>
                     </div>
                 </div>
-                 <div class="liquidGlass-wrapper search-button" id="thirdBtn">
-                    <div class="liquidGlass-effect"></div>
-                    <div class="liquidGlass-tint"></div>
-                    <div class="liquidGlass-shine"></div>
-                    <div class="liquidGlass-text">
-                        <span class="icon">🎲 </span>
-                    </div>
-                </div>
             </div>
             <div class="liquidGlass-wrapper search-input">
                 <div class="liquidGlass-effect"></div>
                 <div class="liquidGlass-tint"></div>
                 <div class="liquidGlass-shine"></div>
                 <div class="liquidGlass-text">
-                    <div class="liquidGlass-text search-textarea-wrapper">
-                        <textarea id="searchInput" placeholder=""></textarea>
-                    </div>
-
+                    <textarea id="searchInput" placeholder="Ask me anything..."></textarea>
                 </div>
             </div>
         </div>
@@ -386,13 +428,10 @@
         // State management
         let isControlledExperimentMode = false;
         let debugMode = false;
-        let thirdButtonMode = false;
 
         // DOM elements
         const controlledExperimentBtn = document.getElementById('controlledExperimentBtn');
         const secondBtn = document.getElementById('secondBtn');
-        const thirdBtn = document.getElementById('thirdBtn');
-        const fourthBtn = document.getElementById('fourthBtn');
         const searchInput = document.getElementById('searchInput');
         const resultContainer = document.getElementById('resultContainer');
         const resultContent = document.getElementById('resultContent');
@@ -403,15 +442,10 @@
 
             if (isControlledExperimentMode) {
                 this.classList.add('active');
-                searchInput.placeholder = "";
-                // Deactivate other buttons
-                secondBtn.classList.remove('active');
-                thirdBtn.classList.remove('active');
-                debugMode = false;
-                thirdButtonMode = false;
+                searchInput.placeholder = "Ask about controlled experiments...";
             } else {
                 this.classList.remove('active');
-                searchInput.placeholder = "";
+                searchInput.placeholder = "Ask me anything...";
             }
         });
 
@@ -419,59 +453,24 @@
             debugMode = !debugMode;
             if (debugMode) {
                 this.classList.add('active');
-                // Deactivate other buttons
-                controlledExperimentBtn.classList.remove('active');
-                thirdBtn.classList.remove('active');
-                isControlledExperimentMode = false;
-                thirdButtonMode = false;
-                alert('Debug mode enabled - you will see detailed error information');
+                console.log('Debug mode enabled');
             } else {
                 this.classList.remove('active');
-                alert('Debug mode disabled');
-            }
-        });
-
-        // Third button click handler
-        thirdBtn.addEventListener('click', function () {
-            thirdButtonMode = !thirdButtonMode;
-            if (thirdButtonMode) {
-                this.classList.add('active');
-                // Deactivate other buttons
-                controlledExperimentBtn.classList.remove('active');
-                secondBtn.classList.remove('active');
-                isControlledExperimentMode = false;
-                debugMode = false;
-                alert('Third button mode enabled - Random/Dice mode activated');
-            } else {
-                this.classList.remove('active');
-                alert('Third button mode disabled');
-            }
-        });
-
-        // FIXED: Search input click handler - Only activate third button if NO other button is active
-        searchInput.addEventListener('click', function () {
-            // Only activate third button if no other mode is currently active
-            if (!isControlledExperimentMode && !debugMode && !thirdButtonMode) {
-                thirdButtonMode = true;
-                thirdBtn.classList.add('active');
-            }
-        });
-
-        // FIXED: Search input focus handler - Only activate third button if NO other button is active
-        searchInput.addEventListener('focus', function () {
-            // Only activate third button if no other mode is currently active
-            if (!isControlledExperimentMode && !debugMode && !thirdButtonMode) {
-                thirdButtonMode = true;
-                thirdBtn.classList.add('active');
+                console.log('Debug mode disabled');
             }
         });
 
         // Search functionality
         searchInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
                 handleSearch();
             }
         });
+
+        function hideResult() {
+            resultContainer.style.display = 'none';
+        }
 
         function logDebug(message, data = null) {
             if (debugMode) {
@@ -487,8 +486,8 @@
                 return;
             }
 
-            // Check if API key is set
-            if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE' || !GEMINI_API_KEY) {
+            // Check if API key is properly set
+            if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
                 displayError('API key not configured. Please add your Gemini API key to the code.');
                 return;
             }
@@ -497,25 +496,20 @@
             resultContainer.style.display = 'block';
             if (isControlledExperimentMode) {
                 resultContent.innerHTML = '<div class="loading">Checking if controlled experiments can help...</div>';
-            } else if (thirdButtonMode) {
-                resultContent.innerHTML = '<div class="loading">Rolling the dice for your answer...</div>';
             } else {
                 resultContent.innerHTML = '<div class="loading">Processing your question...</div>';
             }
 
-            logDebug('Starting search', { question: userQuestion, mode: isControlledExperimentMode, thirdButton: thirdButtonMode });
+            logDebug('Starting search', { question: userQuestion, mode: isControlledExperimentMode });
 
             try {
                 // Prepare the prompt
                 let prompt;
                 if (isControlledExperimentMode) {
-                    prompt = `
+                    prompt = `You are an expert in research methodology. Analyze if controlled experiments can help with this problem:
 
-Can controlled experiments help with this problem: "${userQuestion}"?
-
-`;
-                } else if (thirdButtonMode) {
-                    prompt = `You are in "Random/Dice" mode. Please provide a creative, fun, and slightly random response to this question: "${userQuestion}". Make it interesting and engaging while still being helpful.`;
+Problem: "${userQuestion}"
+: Give a short Answer and how it can help`;
                 } else {
                     prompt = userQuestion;
                 }
@@ -532,8 +526,26 @@ Can controlled experiments help with this problem: "${userQuestion}"?
                         temperature: 0.7,
                         topK: 40,
                         topP: 0.95,
-                        maxOutputTokens: 1024,
-                    }
+                        maxOutputTokens: 2048,
+                    },
+                    safetySettings: [
+                        {
+                            category: "HARM_CATEGORY_HARASSMENT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_HATE_SPEECH",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        }
+                    ]
                 };
 
                 logDebug('Request body', requestBody);
@@ -547,15 +559,15 @@ Can controlled experiments help with this problem: "${userQuestion}"?
                 });
 
                 logDebug('Response status', response.status);
-
-                const responseText = await response.text();
-                logDebug('Raw response', responseText);
+                logDebug('Response headers', Object.fromEntries(response.headers.entries()));
 
                 if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}: ${responseText}`);
+                    const errorText = await response.text();
+                    logDebug('Error response', errorText);
+                    throw new Error(`API request failed with status ${response.status}: ${errorText}`);
                 }
 
-                const data = JSON.parse(responseText);
+                const data = await response.json();
                 logDebug('Parsed response', data);
 
                 if (data.candidates && data.candidates.length > 0) {
@@ -565,12 +577,16 @@ Can controlled experiments help with this problem: "${userQuestion}"?
                         const answer = candidate.content.parts[0].text;
                         displayResult(answer, userQuestion);
                     } else if (candidate.finishReason) {
-                        throw new Error(`Response blocked: ${candidate.finishReason}`);
+                        let errorMessage = `Response was blocked due to: ${candidate.finishReason}`;
+                        if (candidate.finishReason === 'SAFETY') {
+                            errorMessage += '. The content was flagged by safety filters. Please try rephrasing your question.';
+                        }
+                        throw new Error(errorMessage);
                     } else {
                         throw new Error('Unexpected response structure from API');
                     }
                 } else if (data.error) {
-                    throw new Error(`API Error: ${data.error.message || 'Unknown error'}`);
+                    throw new Error(`API Error: ${data.error.message || JSON.stringify(data.error)}`);
                 } else {
                     throw new Error('No valid response from Gemini API');
                 }
@@ -583,8 +599,14 @@ Can controlled experiments help with this problem: "${userQuestion}"?
         }
 
         function displayResult(answer, question) {
+            const formattedAnswer = answer
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+
             resultContent.innerHTML = `
-                <div>${answer.replace(/\n/g, '<br>')}</div>
+                <h3>💡 Answer</h3>
+                <div>${formattedAnswer}</div>
             `;
         }
 
@@ -597,7 +619,7 @@ Can controlled experiments help with this problem: "${userQuestion}"?
                         <strong>Debug Information:</strong><br>
                         Error: ${fullError.message || 'Unknown error'}<br>
                         Stack: ${fullError.stack || 'No stack trace'}<br>
-                        API Key Set: ${GEMINI_API_KEY !== 'YOUR_API_KEY_HERE' ? 'Yes' : 'No'}<br>
+                        API Key Set: ${GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_API_KEY_HERE' ? 'Yes' : 'No'}<br>
                         API URL: ${GEMINI_API_URL}
                     </div>
                 `;
@@ -610,11 +632,11 @@ Can controlled experiments help with this problem: "${userQuestion}"?
                     <p><strong>${errorMessage}</strong></p>
                     <p>Common solutions:</p>
                     <ul>
-                        <li>Make sure you've replaced 'YOUR_API_KEY_HERE' with your actual Gemini API key</li>
-                        <li>Verify your API key is valid and has the correct permissions</li>
+                        <li>Verify your API key is valid and has correct permissions</li>
                         <li>Check that the Gemini API is enabled in your Google Cloud Console</li>
                         <li>Ensure you have a stable internet connection</li>
-                        <li>Try clicking the debug button (😎) for more detailed error information</li>
+                        <li>Try rephrasing your question if it was flagged by safety filters</li>
+                        <li>Click the debug button (🧫) for detailed error information</li>
                     </ul>
                     <p>Get your API key from: <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: #ff6b6b;">Google AI Studio</a></p>
                 </div>
@@ -624,8 +646,8 @@ Can controlled experiments help with this problem: "${userQuestion}"?
 
         // Initialize
         window.addEventListener('load', function () {
-            if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-                console.warn('⚠️ API key not configured. Please replace YOUR_API_KEY_HERE with your actual Gemini API key.');
+            if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
+                console.warn('⚠️ API key not configured. Please replace with your actual Gemini API key.');
             }
             searchInput.focus();
         });
