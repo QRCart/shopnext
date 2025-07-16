@@ -87,7 +87,7 @@
             width: 20rem;
             flex-grow: 1;
             padding: 1.5rem 2rem;
-            border-radius: 2rem;
+            border-radius: 2rem 2rem 2px 0px;
         }
 
         .search-input input {
@@ -123,29 +123,25 @@
 
         /* HOVER EFFECTS */
         .search-button:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-            box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(2px);
+            /* background-color: rgba(255, 255, 255, 0.5); */
+            border: 2px solid white;
+
         }
 
         .search-button:active {
             transform: scale(1.1);
-            background-color: rgba(255, 255, 255, 0.5);
-            box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(2px);
+            border: 2px solid white;
+
         }
 
         .search-button.active {
-            background-color: rgba(255, 255, 255, 0.7);
-            box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(2px);
+            border: 2px solid white;
+
         }
 
         .search-button.active:hover {
             transform: scale(1.3);
-            background-color: rgba(255, 255, 255, 0.5);
-            box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(2px);
+            border: 2px solid white;
         }
 
         @keyframes moveBackground {
@@ -314,7 +310,7 @@
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
                     <div class="liquidGlass-text">
-                        <span class="icon">🤔</span>
+                        <span class="icon">🤷</span>
                     </div>
                 </div>
                 <div class="liquidGlass-wrapper search-button" id="secondBtn">
@@ -322,7 +318,15 @@
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
                     <div class="liquidGlass-text">
-                        <span class="icon">😎</span>
+                        <span class="icon">🧫</span>
+                    </div>
+                </div>
+                <div class="liquidGlass-wrapper search-button" id="secondBtn">
+                    <div class="liquidGlass-effect"></div>
+                    <div class="liquidGlass-tint"></div>
+                    <div class="liquidGlass-shine"></div>
+                    <div class="liquidGlass-text">
+                        <span class="icon">🎲 </span>
                     </div>
                 </div>
             </div>
@@ -427,7 +431,11 @@
 
             // Show loading state
             resultContainer.style.display = 'block';
-            resultContent.innerHTML = '<div class="loading">Processing your question...</div>';
+            if (isControlledExperimentMode) {
+                resultContent.innerHTML = '<div class="loading">Checking if controlled experiments can help...</div>';
+            } else {
+                resultContent.innerHTML = '<div class="loading">Processing your question...</div>';
+            }
 
             logDebug('Starting search', { question: userQuestion, mode: isControlledExperimentMode });
 
@@ -435,7 +443,15 @@
                 // Prepare the prompt
                 let prompt;
                 if (isControlledExperimentMode) {
-                    prompt = `if we do controlled experiment, How can controlled experiments help with the problem "${userQuestion}"? give a short answer`;
+                    prompt = `IMPORTANT: RESPOND WITH ONLY ONE WORD.
+
+Can controlled experiments help with this problem: "${userQuestion}"?
+
+RESPOND WITH ONLY: YES or NO
+
+NO EXPLANATIONS. NO ADDITIONAL TEXT. JUST ONE WORD.
+
+Answer:`;
                 } else {
                     prompt = userQuestion;
                 }
