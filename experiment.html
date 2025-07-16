@@ -510,14 +510,7 @@
 
 Problem: "${userQuestion}"
 
-Please provide:
-1. Whether controlled experiments are suitable for this problem
-2. How to design such experiments if applicable
-3. What variables to control
-4. Expected outcomes and limitations
-5. Alternative research methods if controlled experiments aren't suitable
-
-Be specific and practical in your response.`;
+: Give a short answer and how it gonna help`;
                 } else {
                     prompt = userQuestion;
                 }
@@ -661,7 +654,7 @@ Be specific and practical in your response.`;
             // Automatically activate the controlled experiment button on page load
             isControlledExperimentMode = true;
             controlledExperimentBtn.classList.add('active');
-            searchInput.placeholder = "Ask about controlled experiments...";
+            searchInput.placeholder = "Check Can we help You...";
             
             searchInput.focus();
         });
