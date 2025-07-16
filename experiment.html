@@ -104,44 +104,67 @@
             color: rgba(0, 0, 0, 0.5);
         }
 
+        /* FIXED CIRCULAR BUTTON STYLES */
         .search-button {
-            padding: 0.1rem 0.5rem;
-            border-radius: 1.8rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 0;
+            margin: 1px 9px;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 2px solid transparent;
         }
 
         .search-button,
-        .search-button>div {
-            border-radius: 5rem;
+        .search-button > div {
+            border-radius: 50%;
             width: 3rem;
             height: 3rem;
         }
 
         .search-button .liquidGlass-text {
             text-align: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* HOVER EFFECTS */
+        /* IMPROVED HOVER EFFECTS */
         .search-button:hover {
-            /* background-color: rgba(255, 255, 255, 0.5); */
-            border: 2px solid white;
-
+            transform: scale(1.1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 
+                        0 0 30px rgba(255, 255, 255, 0.2);
         }
 
         .search-button:active {
-            transform: scale(1.1);
-            border: 2px solid white;
-
+            transform: scale(1.05);
+            border: 2px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
         .search-button.active {
-            border: 2px solid white;
-
+            border: 2px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4),
+                        inset 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .search-button.active:hover {
-            transform: scale(1.3);
-            border: 2px solid white;
+            transform: scale(1.15);
+            border: 2px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 
+                        0 0 40px rgba(255, 255, 255, 0.3),
+                        inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Ensure all child elements maintain circular shape */
+        .search-button .liquidGlass-effect,
+        .search-button .liquidGlass-tint,
+        .search-button .liquidGlass-shine {
+            border-radius: 50%;
         }
 
         @keyframes moveBackground {
@@ -171,11 +194,6 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
-        }
-
-        .search-button {
-            width: 2rem;
-            margin: 1px 9px;
         }
 
         /* Result display - MOVED TO TOP */
@@ -265,7 +283,6 @@
             height: 100%;
             display: flex;
             align-items: stretch;
-            /* Allow textarea to stretch */
             justify-content: stretch;
         }
 
@@ -282,7 +299,6 @@
             white-space: pre-wrap;
             overflow-wrap: break-word;
             box-sizing: border-box;
-            /* padding: 1.5rem 1rem;  mimic input padding */
         }
 
         .search-button .liquidGlass-text {
@@ -321,7 +337,7 @@
                         <span class="icon">🧫</span>
                     </div>
                 </div>
-                 <div class="liquidGlass-wrapper search-button" id="secondBtn">
+                 <div class="liquidGlass-wrapper search-button" id="thirdBtn">
                     <div class="liquidGlass-effect"></div>
                     <div class="liquidGlass-tint"></div>
                     <div class="liquidGlass-shine"></div>
@@ -329,16 +345,17 @@
                         <span class="icon">🎲 </span>
                     </div>
                 </div>
-                <div class="liquidGlass-wrapper search-button" id="secondBtn">
-                    <div class="liquidGlass-effect"></div>
-                    <div class="liquidGlass-tint"></div>
-                    <div class="liquidGlass-shine"></div>
-                    <div class="liquidGlass-text">
-                        <span class="icon">🔮</span>
-                    </div>
-                </div>
             </div>
-           
+            <div class="liquidGlass-wrapper search-input">
+                <div class="liquidGlass-effect"></div>
+                <div class="liquidGlass-tint"></div>
+                <div class="liquidGlass-shine"></div>
+                <div class="liquidGlass-text">
+                    <div class="liquidGlass-text search-textarea-wrapper">
+                        <textarea id="searchInput" placeholder=""></textarea>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -369,10 +386,13 @@
         // State management
         let isControlledExperimentMode = false;
         let debugMode = false;
+        let thirdButtonMode = false;
 
         // DOM elements
         const controlledExperimentBtn = document.getElementById('controlledExperimentBtn');
         const secondBtn = document.getElementById('secondBtn');
+        const thirdBtn = document.getElementById('thirdBtn');
+        const fourthBtn = document.getElementById('fourthBtn');
         const searchInput = document.getElementById('searchInput');
         const resultContainer = document.getElementById('resultContainer');
         const resultContent = document.getElementById('resultContent');
@@ -384,6 +404,11 @@
             if (isControlledExperimentMode) {
                 this.classList.add('active');
                 searchInput.placeholder = "";
+                // Deactivate other buttons
+                secondBtn.classList.remove('active');
+                thirdBtn.classList.remove('active');
+                debugMode = false;
+                thirdButtonMode = false;
             } else {
                 this.classList.remove('active');
                 searchInput.placeholder = "";
@@ -394,10 +419,62 @@
             debugMode = !debugMode;
             if (debugMode) {
                 this.classList.add('active');
+                // Deactivate other buttons
+                controlledExperimentBtn.classList.remove('active');
+                thirdBtn.classList.remove('active');
+                isControlledExperimentMode = false;
+                thirdButtonMode = false;
                 alert('Debug mode enabled - you will see detailed error information');
             } else {
                 this.classList.remove('active');
                 alert('Debug mode disabled');
+            }
+        });
+
+        // Third button click handler
+        thirdBtn.addEventListener('click', function () {
+            thirdButtonMode = !thirdButtonMode;
+            if (thirdButtonMode) {
+                this.classList.add('active');
+                // Deactivate other buttons
+                controlledExperimentBtn.classList.remove('active');
+                secondBtn.classList.remove('active');
+                isControlledExperimentMode = false;
+                debugMode = false;
+                alert('Third button mode enabled - Random/Dice mode activated');
+            } else {
+                this.classList.remove('active');
+                alert('Third button mode disabled');
+            }
+        });
+
+        // Search input click handler - THIS IS THE NEW FUNCTIONALITY
+        searchInput.addEventListener('click', function () {
+            // Activate the third button when search input is clicked
+            if (!thirdButtonMode) {
+                thirdButtonMode = true;
+                thirdBtn.classList.add('active');
+                
+                // Deactivate other buttons
+                controlledExperimentBtn.classList.remove('active');
+                secondBtn.classList.remove('active');
+                isControlledExperimentMode = false;
+                debugMode = false;
+            }
+        });
+
+        // Search input focus handler - Additional activation trigger
+        searchInput.addEventListener('focus', function () {
+            // Also activate third button on focus
+            if (!thirdButtonMode) {
+                thirdButtonMode = true;
+                thirdBtn.classList.add('active');
+                
+                // Deactivate other buttons
+                controlledExperimentBtn.classList.remove('active');
+                secondBtn.classList.remove('active');
+                isControlledExperimentMode = false;
+                debugMode = false;
             }
         });
 
@@ -432,11 +509,13 @@
             resultContainer.style.display = 'block';
             if (isControlledExperimentMode) {
                 resultContent.innerHTML = '<div class="loading">Checking if controlled experiments can help...</div>';
+            } else if (thirdButtonMode) {
+                resultContent.innerHTML = '<div class="loading">Rolling the dice for your answer...</div>';
             } else {
                 resultContent.innerHTML = '<div class="loading">Processing your question...</div>';
             }
 
-            logDebug('Starting search', { question: userQuestion, mode: isControlledExperimentMode });
+            logDebug('Starting search', { question: userQuestion, mode: isControlledExperimentMode, thirdButton: thirdButtonMode });
 
             try {
                 // Prepare the prompt
@@ -451,6 +530,8 @@ RESPOND WITH ONLY: YES or NO
 NO EXPLANATIONS. NO ADDITIONAL TEXT. JUST ONE WORD.
 
 Answer:`;
+                } else if (thirdButtonMode) {
+                    prompt = `You are in "Random/Dice" mode. Please provide a creative, fun, and slightly random response to this question: "${userQuestion}". Make it interesting and engaging while still being helpful.`;
                 } else {
                     prompt = userQuestion;
                 }
@@ -518,7 +599,6 @@ Answer:`;
         }
 
         function displayResult(answer, question) {
-
             resultContent.innerHTML = `
                 <div>${answer.replace(/\n/g, '<br>')}</div>
             `;
