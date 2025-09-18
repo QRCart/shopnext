@@ -176,7 +176,7 @@
 
     .services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 30px;
       margin-top: 50px;
     }
@@ -251,65 +251,6 @@
       box-shadow: 0 0 6px rgba(228, 113, 40, 0.4);
     }
 
-    .card-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 24px auto;
-      background: linear-gradient(135deg, var(--arduino-teal), var(--arduino-dark-teal));
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 
-        0 8px 24px rgba(0, 151, 157, 0.2),
-        0 2px 8px rgba(0, 151, 157, 0.1);
-      border: 2px solid rgba(255,255,255,0.9);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Arduino-style circuit pattern on icons */
-    .card-icon::before {
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      right: 8px;
-      bottom: 8px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .card:hover .card-icon {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 
-        0 16px 40px rgba(0, 151, 157, 0.25),
-        0 4px 16px rgba(0, 151, 157, 0.15);
-      background: linear-gradient(135deg, var(--arduino-orange), #d4641f);
-    }
-
-    .card:hover .card-icon::before {
-      opacity: 1;
-    }
-
-    .card-icon svg {
-      width: 28px;
-      height: 28px;
-      stroke: white;
-      stroke-width: 2;
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 2;
-    }
-
-    .card:hover .card-icon svg {
-      transform: scale(1.1);
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-    }
-
     .card h3 {
       margin: 0 0 20px 0;
       font-family: 'Poppins', sans-serif;
@@ -361,21 +302,68 @@
       margin-top: 20px;
     }
 
+    /* Image gallery section */
+    .card-images {
+      margin: 24px 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(0, 151, 157, 0.1);
+      background: rgba(0, 151, 157, 0.02);
+      padding: 12px;
+    }
+
+    .card-image {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--light-gray), #f5f7fa);
+      border: 1px solid rgba(0, 151, 157, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card-image:hover {
+      transform: scale(1.05);
+      border-color: var(--arduino-teal);
+      box-shadow: 0 4px 16px rgba(0, 151, 157, 0.15);
+      background: linear-gradient(135deg, rgba(0, 151, 157, 0.05), rgba(228, 113, 40, 0.05));
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .card-image:hover img {
+      transform: scale(1.1);
+    }
+
+    .card-image .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      text-align: center;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border: 2px dashed rgba(0, 151, 157, 0.3);
+    }
+
     /* Arduino-style result and target boxes */
     .result, .target {
       position: relative;
-      padding: 12px 16px 12px 24px;
-      margin-top: 16px;
-      border-radius: 8px;
-      border-left: 3px solid var(--arduino-teal);
-      background: rgba(0, 151, 157, 0.05);
     }
 
-    .target {
-      border-left-color: var(--arduino-orange);
-      background: rgba(228, 113, 40, 0.05);
-    }
-
+   
     footer {
       text-align: center;
       padding: 40px 24px;
@@ -448,6 +436,13 @@
       .header-connector {
         display: none;
       }
+      .card-images {
+        gap: 8px;
+        padding: 8px;
+      }
+      .card-image .placeholder {
+        font-size: 10px;
+      }
     }
   </style>
 </head>
@@ -461,8 +456,8 @@
     </div>
     <div class="header-connector left"></div>
     <div class="header-connector right"></div>
-    <h1>Local Shops Technologies <span class="tech-badge">v2.0</span></h1>
-    <p>Connecting Businesses with Smart Technology</p>
+    <h1>Eknoor Technologies <span class="tech-badge">v2.0</span></h1>
+    <p>We are not here to sell but to create Abundance</p>
   </header>
 
   <div class="container">
@@ -470,7 +465,6 @@
     <div class="services">
 
       <div class="card">
-        
         <h3>Basic Catalog Websites</h3>
         <p>Customers can see your products, prices, and offers instantly by just scanning a QR code or tapping an NFC bracelet.</p>
         <div class="result">
@@ -479,32 +473,99 @@
         <div class="target">
           <p><b>For:</b> Any business with a huge catalog of products or services, Retail shops, supermarkets, Mobile stores.</p>
         </div>
+        <div class="card-images">
+          <div class="card-image">
+            <div class="placeholder">QR Code<br>Catalog</div>
+            <!-- Replace with: <img src="path/to/qr-catalog.jpg" alt="QR Code Catalog"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Product<br>Gallery</div>
+            <!-- Replace with: <img src="path/to/product-gallery.jpg" alt="Product Gallery"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Price<br>Display</div>
+            <!-- Replace with: <img src="path/to/price-display.jpg" alt="Price Display"> -->
+          </div>
+        </div>
+
+        
       </div>
 
       <div class="card">
-        
         <h3>Product Scan</h3>
         <p>Scan a product on the shelf to get: Product specifications, Comparison with the next product on the shelf.</p>
-        <div class="target">
+         <div class="target">
           <p><b>For:</b> Luxury shops, Jewelry stores, Electronics showrooms, Fashion Showrooms, Car Showroom</p>
         </div>
-      </div>
+      
+        <div class="card-images">
+          <div class="card-image">
+            <div class="placeholder">Barcode<br>Scanner</div>
+            <!-- Replace with: <img src="path/to/barcode-scanner.jpg" alt="Barcode Scanner"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Product<br>Details</div>
+            <!-- Replace with: <img src="path/to/product-details.jpg" alt="Product Details"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Compare<br>Items</div>
+            <!-- Replace with: <img src="path/to/compare-items.jpg" alt="Compare Items"> -->
+          </div>
+        </div>
+</div>
+       
 
       <div class="card">
-        
         <h3>AI WhatsApp Integration</h3>
         <p>Digital Relationship Manager (with Voice Chat) — AI chatbot to manage, nurture, and maintain business relationships with clients.</p>
         <div class="result">
           <p><b>Result:</b> Customers feel cared for, become loyal, and keep coming back.</p>
+        </div><br>
+        <div class="target">
+          <p><b>For:</b> Businesses that operate on repeat customers</p>
         </div>
+        <div class="card-images">
+          <div class="card-image">
+            <div class="placeholder">WhatsApp<br>Bot</div>
+            <!-- Replace with: <img src="path/to/whatsapp-bot.jpg" alt="WhatsApp Bot"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Voice<br>Chat</div>
+            <!-- Replace with: <img src="path/to/voice-chat.jpg" alt="Voice Chat"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Customer<br>Care</div>
+            <!-- Replace with: <img src="path/to/customer-care.jpg" alt="Customer Care"> -->
+          </div>
+        </div>
+
+        
       </div>
 
       <div class="card">
         <h3>Smart Visiting Card & Bracelet</h3>
         <p>Give your customers a smart way to connect. Instantly open your Visiting Card.</p>
-        <div class="result">
+
+         <div class="result">
           <p><b>Result:</b> Easy networking, modern, and instant customer trust.</p>
         </div>
+        
+        <div class="card-images">
+          <div class="card-image">
+            <div class="placeholder">NFC<br>Card</div>
+            <img src="image 1.jpg" alt="NFC Card">
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Smart<br>Bracelet</div>
+            <img src="image 2.jpg" alt="Smart Bracelet">
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Instant<br>Connect</div>
+            <!-- Replace with: <img src="path/to/instant-connect.jpg" alt="Instant Connect"> -->
+          </div>
+        </div>
+
+       
       </div>
 
     </div>
@@ -516,7 +577,7 @@
       <span></span>
       <span></span>
     </div>
-    <p>Made With ❤️ • Powered by Innovation</p>
+    <p>Made with ❤️</p>
   </footer>
 </body>
 
