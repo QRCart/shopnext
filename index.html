@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Local Shops Technologies</title>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --arduino-teal: #00979D;
@@ -31,7 +33,7 @@
     }
 
     header {
-      background: 
+      background:
         /* Circuit board pattern */
         radial-gradient(circle at 25% 25%, rgba(0, 151, 157, 0.05) 0%, transparent 25%),
         radial-gradient(circle at 75% 75%, rgba(228, 113, 40, 0.05) 0%, transparent 25%),
@@ -44,7 +46,7 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,151,157,0.1);
+      box-shadow: 0 8px 32px rgba(0, 151, 157, 0.1);
       border-bottom: 3px solid var(--arduino-teal);
     }
 
@@ -78,8 +80,15 @@
     }
 
     @keyframes pulse {
-      0% { opacity: 0.4; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.2); }
+      0% {
+        opacity: 0.4;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
     }
 
     /* Arduino logo-inspired connector lines */
@@ -113,7 +122,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-shadow: 0 2px 4px rgba(0,151,157,0.1);
+      text-shadow: 0 2px 4px rgba(0, 151, 157, 0.1);
       position: relative;
       z-index: 2;
     }
@@ -147,31 +156,108 @@
       margin: 40px auto;
     }
 
+    /* Enhanced H2 Styling */
     h2 {
-      background: linear-gradient(135deg, var(--arduino-teal), var(--arduino-dark-teal));
+      font-family: 'Poppins', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin: 60px 0 40px 0;
+      text-align: center;
+      letter-spacing: -0.5px;
+      position: relative;
+      padding: 24px 40px;
+      
+      /* Enhanced gradient text */
+      background: linear-gradient(135deg, var(--arduino-teal) 0%, var(--arduino-dark-teal) 50%, var(--arduino-orange) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-family: 'Poppins', sans-serif;
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 30px;
-      text-align: center;
-      letter-spacing: -0.3px;
-      position: relative;
+      
+      /* Container styling */
+      border-radius: 20px;
+      border: 2px solid rgba(0, 151, 157, 0.2);
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 
+        0 8px 32px rgba(0, 151, 157, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      
+      /* Circuit board pattern background */
+      background-image: 
+        linear-gradient(135deg, var(--arduino-teal) 0%, var(--arduino-dark-teal) 50%, var(--arduino-orange) 100%),
+        radial-gradient(circle at 20% 30%, rgba(0, 151, 157, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(228, 113, 40, 0.05) 0%, transparent 30%),
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 151, 157, 0.03) 10px, rgba(0, 151, 157, 0.03) 11px);
+      background-size: 100% 100%, 200px 200px, 200px 200px, 20px 20px;
+      background-blend-mode: overlay, normal, normal, normal;
+      -webkit-background-clip: text, padding-box, padding-box, padding-box;
+      background-clip: text, padding-box, padding-box, padding-box;
+      -webkit-text-fill-color: transparent;
     }
 
-    /* Circuit line under heading */
+    /* Arduino-style connection points on h2 */
+    h2::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      border: 3px solid var(--arduino-teal);
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 
+        0 0 0 2px rgba(0, 151, 157, 0.2),
+        0 0 8px rgba(0, 151, 157, 0.3);
+      z-index: 1;
+    }
+
     h2::after {
       content: '';
       position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--arduino-orange);
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 
+        0 0 0 2px rgba(228, 113, 40, 0.2),
+        0 0 6px rgba(228, 113, 40, 0.3);
+      z-index: 1;
+    }
+
+    /* Circuit connector line */
+    .section-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 50px 0;
+      position: relative;
+    }
+
+    .section-connector::before {
+      content: '';
+      position: absolute;
+      width: 200px;
       height: 3px;
-      background: linear-gradient(90deg, var(--arduino-teal), var(--arduino-orange));
+      background: linear-gradient(90deg, var(--arduino-teal), var(--arduino-orange), var(--circuit-green));
       border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    .section-connector .connector-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--arduino-teal);
+      border: 3px solid var(--white);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0, 151, 157, 0.4);
+      z-index: 1;
+      position: relative;
     }
 
     .services {
@@ -185,13 +271,13 @@
       position: relative;
       padding: 32px 28px;
       border-radius: 16px;
-      box-shadow: 
+      box-shadow:
         0 8px 32px rgba(0, 151, 157, 0.08),
         0 2px 8px rgba(0, 151, 157, 0.04);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border: 2px solid rgba(0, 151, 157, 0.1);
       overflow: hidden;
-      background: 
+      background:
         /* Arduino PCB-inspired pattern */
         radial-gradient(circle at 20% 80%, rgba(0, 151, 157, 0.03) 0%, transparent 20%),
         radial-gradient(circle at 80% 20%, rgba(228, 113, 40, 0.03) 0%, transparent 20%),
@@ -226,18 +312,6 @@
       opacity: 0.4;
       transition: all 0.3s ease;
     }
-
-/*     .card:hover {
-      transform: translateY(-12px);
-      box-shadow: 
-        0 20px 60px rgba(0, 151, 157, 0.15),
-        0 8px 24px rgba(0, 151, 157, 0.1);
-      border-color: rgba(0, 151, 157, 0.3);
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 151, 157, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 80% 20%, rgba(228, 113, 40, 0.05) 0%, transparent 20%),
-        linear-gradient(135deg, var(--white) 0%, #fcfdfe 100%);
-    } */
 
     .card:hover::before {
       opacity: 1;
@@ -298,7 +372,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    .card p + p {
+    .card p+p {
       margin-top: 20px;
     }
 
@@ -355,19 +429,18 @@
       font-family: 'JetBrains Mono', monospace;
       text-align: center;
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-      border: 2px dashed rgba(0, 151, 157, 0.3);
     }
 
     /* Arduino-style result and target boxes */
-    .result, .target {
+    .result,
+    .target {
       position: relative;
     }
 
-   
     footer {
       text-align: center;
       padding: 40px 24px;
-      background: 
+      background:
         repeating-linear-gradient(90deg, rgba(0, 151, 157, 0.05) 0, rgba(0, 151, 157, 0.05) 1px, transparent 1px, transparent 60px),
         linear-gradient(135deg, var(--white), var(--light-gray));
       color: var(--text-light);
@@ -376,7 +449,7 @@
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       border-top: 3px solid var(--arduino-teal);
-      box-shadow: 0 -4px 16px rgba(0,151,157,0.05);
+      box-shadow: 0 -4px 16px rgba(0, 151, 157, 0.05);
       position: relative;
     }
 
@@ -414,34 +487,48 @@
         width: 95%;
         margin: 20px auto;
       }
+
       .services {
         grid-template-columns: 1fr;
         gap: 20px;
       }
+
       .card {
         padding: 24px 20px;
       }
+
       header h1 {
         font-size: 32px;
       }
+
       .tech-badge {
         display: block;
         margin: 8px auto 0;
         transform: none;
         width: fit-content;
       }
+
       h2 {
         font-size: 28px;
+        padding: 20px 24px;
+        margin: 40px 0 30px 0;
       }
+
       .header-connector {
         display: none;
       }
+
       .card-images {
         gap: 8px;
         padding: 8px;
       }
+
       .card-image .placeholder {
         font-size: 10px;
+      }
+
+      .section-connector::before {
+        width: 150px;
       }
     }
   </style>
@@ -461,17 +548,66 @@
   </header>
 
   <div class="container">
-    <h2>Our Core Services</h2>
+    <h2>For Businesses With a Website</h2>
     <div class="services">
 
       <div class="card">
-        <h3>Basic Catalog Websites</h3>
-        <p>Customers can see your products, prices, and offers instantly by just scanning a QR code or tapping an NFC bracelet.</p>
+        <h3>Product Scan</h3>
+        <p>Scan a product on the shelf to get: Product specifications, Comparison with the next product on the shelf.
+        </p>
+        <div class="target">
+          <p><b>For:</b> Luxury shops, Jewelry stores, Electronics showrooms, Fashion Showrooms, Car Showroom</p>
+        </div>
+
+        <div class="card-images">
+          <div class="card-image">
+            <div class="placeholder">Barcode<br>Scanner</div>
+            <!-- Replace with: <img src="path/to/barcode-scanner.jpg" alt="Barcode Scanner"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Product<br>Details</div>
+            <!-- Replace with: <img src="path/to/product-details.jpg" alt="Product Details"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Compare<br>Items</div>
+            <!-- Replace with: <img src="path/to/compare-items.jpg" alt="Compare Items"> -->
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Smart Visiting Card - Bracelet</h3>
+        <p>Give your customers a smart way to connect. Instantly open your Visiting Card.</p>
+
+        <div class="result">
+          <p><b>Result:</b> Easy networking, modern, and instant customer trust.</p>
+        </div>
+
+        <div class="card-images">
+          <div class="card-image">
+            <div class="placeholder">NFC<br>Card</div>
+            <!-- <img src="image1.jpg" alt="NFC Card"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Smart<br>Bracelet</div>
+            <!-- <img src="image 2.jpg" alt="Smart Bracelet"> -->
+          </div>
+          <div class="card-image">
+            <div class="placeholder">Instant<br>Connect</div>
+            <!-- Replace with: <img src="path/to/instant-connect.jpg" alt="Instant Connect"> -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3>Smart Menu</h3>
+        <p>Customers can see your products, prices, and offers instantly by just scanning a QR code or tapping an NFC
+          bracelet.</p>
         <div class="result">
           <p><b>Result:</b> Looks professional, Customers can easily browse everything</p>
         </div><br>
         <div class="target">
-          <p><b>For:</b> Any business with a huge catalog of products or services, Retail shops, supermarkets, Mobile stores.</p>
+          <p><b>For:</b> Any business with a huge catalog of products or services, Retail shops, supermarkets, Mobile
+            stores.</p>
         </div>
         <div class="card-images">
           <div class="card-image">
@@ -487,87 +623,44 @@
             <!-- Replace with: <img src="path/to/price-display.jpg" alt="Price Display"> -->
           </div>
         </div>
-
-        
       </div>
+    </div>
+  </div>
 
-      <div class="card">
-        <h3>Product Scan</h3>
-        <p>Scan a product on the shelf to get: Product specifications, Comparison with the next product on the shelf.</p>
-         <div class="target">
-          <p><b>For:</b> Luxury shops, Jewelry stores, Electronics showrooms, Fashion Showrooms, Car Showroom</p>
-        </div>
-      
-        <div class="card-images">
-          <div class="card-image">
-            <div class="placeholder">Barcode<br>Scanner</div>
-            <!-- Replace with: <img src="path/to/barcode-scanner.jpg" alt="Barcode Scanner"> -->
-          </div>
-          <div class="card-image">
-            <div class="placeholder">Product<br>Details</div>
-            <!-- Replace with: <img src="path/to/product-details.jpg" alt="Product Details"> -->
-          </div>
-          <div class="card-image">
-            <div class="placeholder">Compare<br>Items</div>
-            <!-- Replace with: <img src="path/to/compare-items.jpg" alt="Compare Items"> -->
-          </div>
-        </div>
-</div>
-       
+  <!-- Section connector between the two main sections -->
+  <div class="section-connector">
+    <div class="connector-dot"></div>
+  </div>
 
+  <div class="container">
+    <h2>For Businesses Without a Website</h2>
+    <div class="services">
       <div class="card">
-        <h3>AI WhatsApp Integration</h3>
-        <p>Digital Relationship Manager (with Voice Chat) — AI chatbot to manage, nurture, and maintain business relationships with clients.</p>
+        <h3>Basic Catalog Websites</h3>
+        <p>Customers can see your products, prices, and offers instantly by just scanning a QR code or tapping an NFC
+          bracelet.</p>
         <div class="result">
-          <p><b>Result:</b> Customers feel cared for, become loyal, and keep coming back.</p>
+          <p><b>Result:</b> Looks professional, Customers can easily browse everything</p>
         </div><br>
         <div class="target">
-          <p><b>For:</b> Businesses that operate on repeat customers</p>
+          <p><b>For:</b> Any business with a huge catalog of products or services, Retail shops, supermarkets, Mobile
+            stores.</p>
         </div>
         <div class="card-images">
           <div class="card-image">
-            <div class="placeholder">WhatsApp<br>Bot</div>
-            <!-- Replace with: <img src="path/to/whatsapp-bot.jpg" alt="WhatsApp Bot"> -->
+            <div class="placeholder">QR Code<br>Catalog</div>
+            <!-- Replace with: <img src="path/to/qr-catalog.jpg" alt="QR Code Catalog"> -->
           </div>
           <div class="card-image">
-            <div class="placeholder">Voice<br>Chat</div>
-            <!-- Replace with: <img src="path/to/voice-chat.jpg" alt="Voice Chat"> -->
+            <div class="placeholder">Product<br>Gallery</div>
+            <!-- Replace with: <img src="path/to/product-gallery.jpg" alt="Product Gallery"> -->
           </div>
           <div class="card-image">
-            <div class="placeholder">Customer<br>Care</div>
-            <!-- Replace with: <img src="path/to/customer-care.jpg" alt="Customer Care"> -->
+            <div class="placeholder">Price<br>Display</div>
+            <!-- Replace with: <img src="path/to/price-display.jpg" alt="Price Display"> -->
           </div>
         </div>
-
-        
       </div>
-
-      <div class="card">
-        <h3>Smart Visiting Card & Bracelet</h3>
-        <p>Give your customers a smart way to connect. Instantly open your Visiting Card.</p>
-
-         <div class="result">
-          <p><b>Result:</b> Easy networking, modern, and instant customer trust.</p>
-        </div>
-        
-        <div class="card-images">
-          <div class="card-image">
-            <div class="placeholder">NFC<br>Card</div>
-            <img src="image 1.jpg" alt="NFC Card">
-          </div>
-          <div class="card-image">
-            <div class="placeholder">Smart<br>Bracelet</div>
-            <img src="image 2.jpg" alt="Smart Bracelet">
-          </div>
-          <div class="card-image">
-            <div class="placeholder">Instant<br>Connect</div>
-            <!-- Replace with: <img src="path/to/instant-connect.jpg" alt="Instant Connect"> -->
-          </div>
-        </div>
-
-       
-      </div>
-
     </div>
   </div>
 
